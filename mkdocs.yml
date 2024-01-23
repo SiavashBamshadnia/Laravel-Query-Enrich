@@ -1,12 +1,9 @@
 site_name: Laravel Query Enrich
 repo_url: https://github.com/SiavashBamshadnia/Laravel-Source-Encrypter
-#theme: readthedocs
 theme:
   name: material
-  #  name: readthedocs
   features:
     - content.code.copy
-#    - content.code.select
 
 nav:
   - index: index.md
@@ -98,21 +95,5 @@ nav:
           - trim: QE/String/trim.md
           - upper: QE/String/upper.md
 
-
-#  - QE: QE/index.md
-#       - 'Nested Page': 'index.md'
-#      - QE/C: QE/Basic/column.md
-
-
-#plugins:
-#  - pdf-export
-#markdown_extensions:
-#  - pymdownx.highlight:
-#      anchor_linenums: true
-#      line_spans: __span
-#      pygments_lang_class: true
-#  - pymdownx.inlinehilite
-#  - pymdownx.snippets
-#  - pymdownx.superfences
 markdown_extensions:
   - admonition
