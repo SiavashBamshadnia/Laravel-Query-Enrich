@@ -1,5 +1,5 @@
 site_name: Laravel Query Enrich
-repo_url: https://github.com/SiavashBamshadnia/Laravel-Source-Encrypter
+repo_url: https://github.com/SiavashBamshadnia/Laravel-Query-Enrich
 theme:
   name: material
   features:
