@@ -1,0 +1,58 @@
+{
+    "name": "sbamtr/laravel-query-enrich",
+    "description": "A helper for Laravel eloquent and query builder",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "files": [
+            "src/helpers.php"
+        ],
+        "psr-4": {
+            "sbamtr\\LaravelQueryEnrich\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Siavash Bamshadnia",
+            "email": "sbamtr@gmail.com"
+        }
+    ],
+    "require": {
+        "nesbot/carbon": "^2",
+        "illuminate/database": "^8.0|^9.0|^10",
+        "illuminate/support": "^8.0|^9.0|^10",
+        "illuminate/contracts": "^8.0|^9.0|^10"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6|^7|^8"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Workbench\\App\\": "workbench/app/",
+            "Workbench\\Database\\Factories\\": "workbench/database/factories/",
+            "Workbench\\Database\\Seeders\\": "workbench/database/seeders/",
+            "Workbench\\BaseTest\\": "workbench/BaseTest/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "@clear",
+            "@prepare"
+        ],
+        "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
+        "prepare": "@php vendor/bin/testbench package:discover --ansi",
+        "build": "@php vendor/bin/testbench workbench:build --ansi",
+        "serve": [
+            "Composer\\Config::disableProcessTimeout",
+            "@build",
+            "@php vendor/bin/testbench serve"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "sbamtr\\LaravelQueryEnrich\\QueryEnrichServiceProvider"
+            ]
+        }
+    }
+}

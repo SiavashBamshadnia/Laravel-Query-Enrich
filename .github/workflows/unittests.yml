@@ -1,0 +1,58 @@
+name: run unittests
+
+on: [ push ]
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+      #        laravel-version: [ 8, 9, 10, 11 ]
+
+    runs-on: ubuntu-latest
+
+    name: PHP ${{ matrix.php-version }} - ${{ matrix.dependency-version }}
+
+    services:
+      mysql:
+        image: mariadb
+        env:
+          MYSQL_DATABASE: test
+          MYSQL_ROOT_PASSWORD: mysql
+        ports:
+          - 3306:3306
+
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: my_password
+          POSTGRES_DB: test
+        ports:
+          - 5432:5432
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup mssql ODBC
+        uses: Yarden-zamir/install-mssql-odbc@main
+
+      - name: Run the action
+        uses: potatoqualitee/mssqlsuite@v1.7
+        with:
+          install: sqlengine, sqlpackage
+          sa-password: yourStrong(!)Password
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: mbstring, dom, fileinfo, pdo_sqlite, pdo_mysql, pdo_sqlsrv
+          coverage: xdebug
+
+      - name: Install Dependencies
+        run: |
+          composer update --prefer-dist --no-interaction
+          composer show
+
+      - name: Run PHPUnit
+        run: vendor/bin/phpunit

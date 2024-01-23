@@ -1,0 +1,118 @@
+site_name: Laravel Query Enrich
+repo_url: https://github.com/SiavashBamshadnia/Laravel-Source-Encrypter
+#theme: readthedocs
+theme:
+  name: material
+  #  name: readthedocs
+  features:
+    - content.code.copy
+#    - content.code.select
+
+nav:
+  - index: index.md
+  - Installation: installation.md
+  - QE:
+      - Introduction: QE/introduction.md
+      - Basic:
+          - column (c): QE/Basic/column.md
+          - raw: QE/Basic/raw.md
+      - Advanced:
+          - case: QE/Advanced/case.md
+          - coalesce: QE/Advanced/coalesce.md
+          - exists: QE/Advanced/exists.md
+          - if: QE/Advanced/if.md
+          - isNull: QE/Advanced/isNull.md
+      - Conditional:
+          - condition: QE/Conditional/condition.md
+          - and: QE/Conditional/and.md
+          - or: QE/Conditional/or.md
+          - not: QE/Conditional/not.md
+      - Date:
+          - addDate: QE/Date/addDate.md
+          - currentDate: QE/Date/currentDate.md
+          - currentTime: QE/Date/currentTime.md
+          - date: QE/Date/date.md
+          - dateDiff: QE/Date/dateDiff.md
+          - dayOfWeek: QE/Date/dayOfWeek.md
+          - hour: QE/Date/hour.md
+          - minute: QE/Date/minute.md
+          - month: QE/Date/month.md
+          - monthName: QE/Date/monthName.md
+          - now: QE/Date/now.md
+          - second: QE/Date/second.md
+          - subDate: QE/Date/subDate.md
+          - time: QE/Date/time.md
+          - year: QE/Date/year.md
+      - Numeric:
+          - abs: QE/Numeric/abs.md
+          - acos: QE/Numeric/acos.md
+          - add: QE/Numeric/add.md
+          - asin: QE/Numeric/asin.md
+          - atan: QE/Numeric/atan.md
+          - atan2: QE/Numeric/atan2.md
+          - avg: QE/Numeric/avg.md
+          - ceil: QE/Numeric/ceil.md
+          - cos: QE/Numeric/cos.md
+          - cot: QE/Numeric/cot.md
+          - count: QE/Numeric/count.md
+          - degreesToRadian: QE/Numeric/degreesToRadian.md
+          - divide: QE/Numeric/divide.md
+          - exp: QE/Numeric/exp.md
+          - floor: QE/Numeric/floor.md
+          - greatest: QE/Numeric/greatest.md
+          - least: QE/Numeric/least.md
+          - ln: QE/Numeric/ln.md
+          - log: QE/Numeric/log.md
+          - max: QE/Numeric/max.md
+          - min: QE/Numeric/min.md
+          - mod: QE/Numeric/mod.md
+          - multiply: QE/Numeric/multiply.md
+          - pi: QE/Numeric/pi.md
+          - pow: QE/Numeric/pow.md
+          - radianToDegrees: QE/Numeric/radianToDegrees.md
+          - rand: QE/Numeric/rand.md
+          - round: QE/Numeric/round.md
+          - sign: QE/Numeric/sign.md
+          - sin: QE/Numeric/sin.md
+          - sqrt: QE/Numeric/sqrt.md
+          - subtract: QE/Numeric/subtract.md
+          - sum: QE/Numeric/sum.md
+          - tan: QE/Numeric/tan.md
+      - String:
+          - concat: QE/String/concat.md
+          - concatWS: QE/String/concatWS.md
+          - left: QE/String/left.md
+          - length: QE/String/length.md
+          - lower: QE/String/lower.md
+          - padLeft: QE/String/padLeft.md
+          - ltrim: QE/String/ltrim.md
+          - padRight: QE/String/padRight.md
+          - position: QE/String/position.md
+          - repeat: QE/String/repeat.md
+          - replace: QE/String/replace.md
+          - reverse: QE/String/reverse.md
+          - right: QE/String/right.md
+          - rtrim: QE/String/rtrim.md
+          - space: QE/String/space.md
+          - substr: QE/String/substr.md
+          - trim: QE/String/trim.md
+          - upper: QE/String/upper.md
+
+
+#  - QE: QE/index.md
+#       - 'Nested Page': 'index.md'
+#      - QE/C: QE/Basic/column.md
+
+
+#plugins:
+#  - pdf-export
+#markdown_extensions:
+#  - pymdownx.highlight:
+#      anchor_linenums: true
+#      line_spans: __span
+#      pygments_lang_class: true
+#  - pymdownx.inlinehilite
+#  - pymdownx.snippets
+#  - pymdownx.superfences
+markdown_extensions:
+  - admonition
