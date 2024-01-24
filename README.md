@@ -201,3 +201,19 @@ $author = Author::select(
 select `first_name`, `last_name`, concat_ws(' ', `first_name`, `last_name`) as `result`
 from `authors`
 ```
+
+## Installation and documentation
+
+The complete documentation is available here:
+
+https://laravel-query-enrich.readthedocs.io/
+
+## License
+
+The MIT License (MIT). Please see the [License file](LICENSE) for more information.
+
+----
+
+Written with ♥ by Siavash Bamshadnia.
+
+Please support me by staring this repository.

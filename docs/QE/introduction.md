@@ -1,7 +1,7 @@
 # QE
 
-QE is a helper class that makes writing complex SQL queries in Laravel simpler. It gives you a bunch of functions for
-things you often need in databases. Here are some of QE's functions:
+QE is a helper class that makes writing complex SQL queries in Laravel simpler. It gives you a lot of functions for
+things you often need in databases. Here are QE's functions:
 
 ## 1. Basic Functions
 
