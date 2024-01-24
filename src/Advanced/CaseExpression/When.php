@@ -32,7 +32,7 @@ class When extends DBFunction
      * Initializes a new WHEN clause with the given condition and result.
      *
      * @param mixed $condition The condition for the WHEN clause.
-     * @param mixed $then The result for the THEN clause.
+     * @param mixed $then      The result for the THEN clause.
      */
     public function __construct(mixed $condition, mixed $then)
     {

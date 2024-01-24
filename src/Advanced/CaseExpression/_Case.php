@@ -28,7 +28,7 @@ class _Case extends DBFunction
      * Constructor for the CASE expression class.
      *
      * @param array $whens An array of WHEN conditions for the CASE expression.
-     * @param mixed $else The result to return if no WHEN condition is matched (optional).
+     * @param mixed $else  The result to return if no WHEN condition is matched (optional).
      */
     public function __construct(array $whens = [], mixed $else = null)
     {
@@ -47,15 +47,16 @@ class _Case extends DBFunction
     protected function getQuery(): string
     {
         $whens = $this->whens;
-        $sql = "case ";
+        $sql = 'case ';
         foreach ($whens as $when) {
             $when = $this->escape($when);
-            $sql .= $when . ' ';
+            $sql .= $when.' ';
         }
         if (isset($this->else)) {
-            $sql .= 'else ' . $this->escape($this->else) . ' ';
+            $sql .= 'else '.$this->escape($this->else).' ';
         }
         $sql .= 'end';
+
         return $sql;
     }
 }

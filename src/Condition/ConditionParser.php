@@ -15,8 +15,10 @@ class ConditionParser
      * Parses an array of conditions.
      *
      * @param array $conditions An array of conditions.
-     * @return Condition|ConditionChain|Raw Depending on the input, this method returns an instance of Condition, ConditionChain, or Raw.
+     *
      * @throws InvalidArgumentException If the input is invalid.
+     *
+     * @return Condition|ConditionChain|Raw Depending on the input, this method returns an instance of Condition, ConditionChain, or Raw.
      */
     public static function parse(array $conditions): Condition|ConditionChain|Raw
     {
@@ -29,6 +31,7 @@ class ConditionParser
         if (count($conditions) === 2 || count($conditions) === 3) {
             return new Condition(...$conditions);
         }
+
         throw new InvalidArgumentException('Invalid condition');
     }
 }

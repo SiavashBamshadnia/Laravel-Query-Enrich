@@ -16,7 +16,6 @@ class Right extends DBFunction
 
     public function __construct(mixed $string, mixed $numberOfChars)
     {
-
         $this->string = $string;
         $this->numberOfChars = $numberOfChars;
     }
@@ -26,6 +25,7 @@ class Right extends DBFunction
         if ($this->getDatabaseEngine() == EDatabaseEngine::SQLite) {
             return $this->getFunctionCallSql('rightstr', [$this->string, $this->numberOfChars]);
         }
+
         return $this->getFunctionCallSql('right', [$this->string, $this->numberOfChars]);
     }
 

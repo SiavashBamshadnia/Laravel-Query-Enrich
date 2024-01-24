@@ -29,8 +29,10 @@ class ConcatWS extends DBFunction
                 $parameters[] = $this->separator;
             }
             array_pop($parameters);
+
             return QE::concat(...$parameters)->getQuery();
         }
+
         return $this->getFunctionCallSql('concat_ws', [$this->separator, ...$this->parameters]);
     }
 }

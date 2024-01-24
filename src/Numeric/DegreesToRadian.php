@@ -24,9 +24,10 @@ class DegreesToRadian extends DBFunction
             case EDatabaseEngine::MySQL:
             case EDatabaseEngine::PostgreSQL:
             case EDatabaseEngine::SQLite:
-            return $this->getFunctionCallSql('radians', [$this->parameter]);
+                return $this->getFunctionCallSql('radians', [$this->parameter]);
             case EDatabaseEngine::SQLServer:
                 $parameter = $this->escape($this->parameter);
+
                 return "$parameter * (pi() / 180)";
         }
     }

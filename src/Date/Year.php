@@ -25,6 +25,7 @@ class Year extends DBFunction
                 return $this->getFunctionCallSql('year', [$this->parameter]);
             case EDatabaseEngine::PostgreSQL:
                 $parameter = $this->escape($this->parameter);
+
                 return "extract(year from $parameter)";
             case EDatabaseEngine::SQLite:
                 return $this->getFunctionCallSql('strftime', [QE::raw("'%Y'"), $this->parameter]);

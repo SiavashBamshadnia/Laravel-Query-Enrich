@@ -16,7 +16,7 @@ class _If extends DBFunction
 
     private mixed $valueIfFalse;
 
-    function __construct(DBFunction $condition, mixed $valueIfTrue, mixed $valueIfFalse)
+    public function __construct(DBFunction $condition, mixed $valueIfTrue, mixed $valueIfFalse)
     {
         $this->condition = $condition;
         $this->valueIfTrue = $valueIfTrue;

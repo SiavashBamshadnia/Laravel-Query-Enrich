@@ -19,6 +19,7 @@ class Not extends DBFunction
     protected function getQuery(): string
     {
         $parameter = $this->escape($this->parameter);
+
         return "not $parameter";
     }
 }

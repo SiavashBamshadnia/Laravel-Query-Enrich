@@ -21,8 +21,10 @@ class Date extends DBFunction
     {
         if ($this->getDatabaseEngine() == EDatabaseEngine::SQLServer) {
             $parameter = $this->escape($this->parameter);
+
             return "cast($parameter as date)";
         }
+
         return $this->getFunctionCallSql('date', [$this->parameter]);
     }
 }

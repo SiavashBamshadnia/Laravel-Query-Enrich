@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 use sbamtr\LaravelQueryEnrich\Exception\InvalidArgumentException;
 
 /**
- * Represents a raw SQL expression
+ * Represents a raw SQL expression.
  *
  * @extends DBFunction
  */
@@ -25,8 +25,8 @@ class Raw extends DBFunction
     /**
      * Raw constructor.
      *
-     * @param string $sql The raw SQL string.
-     * @param array $bindings The array of parameter bindings.
+     * @param string $sql      The raw SQL string.
+     * @param array  $bindings The array of parameter bindings.
      *
      * @throws InvalidArgumentException If the number of placeholders in the SQL string
      *                                  does not match the number of bindings.
@@ -38,7 +38,7 @@ class Raw extends DBFunction
         $bindingsCount = count($bindings);
 
         if ($questionMarksCount !== $bindingsCount) {
-            throw new InvalidArgumentException("Invalid parameter number");
+            throw new InvalidArgumentException('Invalid parameter number');
         }
 
         $this->sql = $sql;

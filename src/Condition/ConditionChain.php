@@ -13,6 +13,7 @@ class ConditionChain extends DBFunction
 {
     /**
      * Array of conditions that form the chain.
+     *
      * @var array
      */
     private array $conditions;
@@ -36,6 +37,7 @@ class ConditionChain extends DBFunction
     {
         $conditions = $this->conditions;
         $and = new _And(...$conditions);
+
         return $and->getQuery();
     }
 }

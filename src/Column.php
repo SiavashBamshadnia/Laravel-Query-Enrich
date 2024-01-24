@@ -1,6 +1,7 @@
 <?php
 
 namespace sbamtr\LaravelQueryEnrich;
+
 /**
  * Retrieves a reference to a specific database column.
  */
@@ -17,10 +18,11 @@ class Column extends DBFunction
     {
         $firstSurroundingCharacter = $this->getFirstSurroundingCharacter();
         $lastSurroundingCharacter = $this->getLastSurroundingCharacter();
-        return $firstSurroundingCharacter . str_replace(
-                '.',
-                "$lastSurroundingCharacter.$firstSurroundingCharacter",
-                $this->name
-            ) . $lastSurroundingCharacter;
+
+        return $firstSurroundingCharacter.str_replace(
+            '.',
+            "$lastSurroundingCharacter.$firstSurroundingCharacter",
+            $this->name
+        ).$lastSurroundingCharacter;
     }
 }

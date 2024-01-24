@@ -35,8 +35,9 @@ class Rand extends DBFunction
             return $this->getFunctionCallSql($function);
         }
         if ($this->getDatabaseEngine() === EDatabaseEngine::PostgreSQL) {
-            throw new InvalidArgumentException("Random function cannot have seed in postgresql database.");
+            throw new InvalidArgumentException('Random function cannot have seed in postgresql database.');
         }
+
         return $this->getFunctionCallSql($function, [$this->seed]);
     }
 
@@ -44,6 +45,7 @@ class Rand extends DBFunction
     {
         DB::connection()->getPdo()->sqliteCreateFunction('random', function ($seed) {
             srand($seed);
+
             return rand();
         }, 1);
     }

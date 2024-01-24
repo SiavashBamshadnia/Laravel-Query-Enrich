@@ -11,7 +11,6 @@ use sbamtr\LaravelQueryEnrich\EDatabaseEngine;
  */
 class Log extends DBFunction
 {
-
     private mixed $parameter;
     private mixed $base;
 

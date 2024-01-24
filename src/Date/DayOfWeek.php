@@ -22,14 +22,15 @@ class DayOfWeek extends DBFunction
     {
         switch ($this->getDatabaseEngine()) {
             case EDatabaseEngine::MySQL:
-                return $this->getFunctionCallSql('dayofweek', [$this->parameter]) . '-1';
+                return $this->getFunctionCallSql('dayofweek', [$this->parameter]).'-1';
             case EDatabaseEngine::PostgreSQL:
                 $parameter = $this->escape($this->parameter);
+
                 return "extract(dow from $parameter)";
             case EDatabaseEngine::SQLite:
                 return $this->getFunctionCallSql('strftime', [QE::raw("'%w'"), $this->parameter]);
             case EDatabaseEngine::SQLServer:
-                return $this->getFunctionCallSql('datepart', [QE::raw('weekday'), $this->parameter]) . '-1';
+                return $this->getFunctionCallSql('datepart', [QE::raw('weekday'), $this->parameter]).'-1';
         }
     }
 }

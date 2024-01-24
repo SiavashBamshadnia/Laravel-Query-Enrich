@@ -22,12 +22,14 @@ class Time extends DBFunction
         switch ($this->getDatabaseEngine()) {
             case EDatabaseEngine::MySQL:
             case EDatabaseEngine::SQLite:
-            return $this->getFunctionCallSql('time', [$this->parameter]);
+                return $this->getFunctionCallSql('time', [$this->parameter]);
             case EDatabaseEngine::PostgreSQL:
                 $parameter = $this->escape($this->parameter);
+
                 return "$parameter::time";
             case EDatabaseEngine::SQLServer:
                 $parameter = $this->escape($this->parameter);
+
                 return "cast($parameter as time(0))";
         }
     }

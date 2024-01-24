@@ -5,7 +5,7 @@ namespace sbamtr\LaravelQueryEnrich\String;
 use sbamtr\LaravelQueryEnrich\DBFunction;
 
 /**
- * Converts a string to lower-case
+ * Converts a string to lower-case.
  */
 class Lower extends DBFunction
 {
