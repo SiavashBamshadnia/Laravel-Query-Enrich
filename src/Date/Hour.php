@@ -25,6 +25,7 @@ class Hour extends DBFunction
                 return $this->getFunctionCallSql('hour', [$this->parameter]);
             case EDatabaseEngine::PostgreSQL:
                 $parameter = $this->escape($this->parameter);
+
                 return "extract(hour from $parameter)";
             case EDatabaseEngine::SQLite:
                 return $this->getFunctionCallSql('strftime', [QE::raw("'%H'"), $this->parameter]);

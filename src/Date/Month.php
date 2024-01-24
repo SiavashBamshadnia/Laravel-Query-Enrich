@@ -25,6 +25,7 @@ class Month extends DBFunction
                 return $this->getFunctionCallSql('month', [$this->parameter]);
             case EDatabaseEngine::PostgreSQL:
                 $parameter = $this->escape($this->parameter);
+
                 return "extract(month from $parameter)";
             case EDatabaseEngine::SQLite:
                 return $this->getFunctionCallSql('strftime', [QE::raw("'%m'"), $this->parameter]);

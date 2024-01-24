@@ -27,7 +27,8 @@ class Greatest extends DBFunction
                 return $this->getFunctionCallSql('greatest', $this->parameters);
             case EDatabaseEngine::SQLServer:
                 $parameters = $this->escape($this->parameters);
-                $parametersString = '(' . implode('),(', $parameters) . ')';
+                $parametersString = '('.implode('),(', $parameters).')';
+
                 return "(select max(i) from (values $parametersString) AS T(i))";
         }
     }

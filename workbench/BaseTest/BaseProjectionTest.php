@@ -12,6 +12,7 @@ use sbamtr\LaravelQueryEnrich\Exception\InvalidArgumentException;
 use sbamtr\LaravelQueryEnrich\QE;
 use Workbench\App\Models\Author;
 use Workbench\App\Models\Book;
+
 use function sbamtr\LaravelQueryEnrich\c;
 
 abstract class BaseProjectionTest extends BaseTest
@@ -20,8 +21,8 @@ abstract class BaseProjectionTest extends BaseTest
     {
         Author::insert([
             'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'email' => $this->faker->email,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
         ]);
 
         $author = Author::select(
@@ -41,7 +42,7 @@ abstract class BaseProjectionTest extends BaseTest
         $number_2 = $this->faker->randomNumber();
 
         $queryResult = DB::selectOne(
-            'select ' . QE::raw('?+?', [$number_1, $number_2])->as('result'),
+            'select '.QE::raw('?+?', [$number_1, $number_2])->as('result'),
         );
 
         $actual = $queryResult->result;
@@ -60,30 +61,30 @@ abstract class BaseProjectionTest extends BaseTest
     {
         $author = Author::create([
             'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'email' => $this->faker->email,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
         ]);
         Book::insert([
             [
-                'title' => $this->faker->title,
+                'title'       => $this->faker->title,
                 'description' => $this->faker->text,
-                'author_id' => $author->id,
-                'price' => 150,
-                'year' => $this->faker->year,
+                'author_id'   => $author->id,
+                'price'       => 150,
+                'year'        => $this->faker->year,
             ],
             [
-                'title' => $this->faker->title,
+                'title'       => $this->faker->title,
                 'description' => $this->faker->text,
-                'author_id' => $author->id,
-                'price' => 62,
-                'year' => $this->faker->year,
+                'author_id'   => $author->id,
+                'price'       => 62,
+                'year'        => $this->faker->year,
             ],
             [
-                'title' => $this->faker->title,
+                'title'       => $this->faker->title,
                 'description' => $this->faker->text,
-                'author_id' => $author->id,
-                'price' => 20,
-                'year' => $this->faker->year,
+                'author_id'   => $author->id,
+                'price'       => 20,
+                'year'        => $this->faker->year,
             ],
         ]);
 
@@ -110,23 +111,23 @@ abstract class BaseProjectionTest extends BaseTest
     {
         $author = Author::create([
             'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'email' => $this->faker->email,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
         ]);
         Book::insert([
             [
-                'title' => $this->faker->title,
+                'title'       => $this->faker->title,
                 'description' => $this->faker->text,
-                'author_id' => $author->id,
-                'price' => 150,
-                'year' => $this->faker->year,
+                'author_id'   => $author->id,
+                'price'       => 150,
+                'year'        => $this->faker->year,
             ],
             [
-                'title' => $this->faker->title,
+                'title'       => $this->faker->title,
                 'description' => $this->faker->text,
-                'author_id' => $author->id,
-                'price' => 62,
-                'year' => $this->faker->year,
+                'author_id'   => $author->id,
+                'price'       => 62,
+                'year'        => $this->faker->year,
             ],
         ]);
 
@@ -142,14 +143,14 @@ abstract class BaseProjectionTest extends BaseTest
     {
         $author = Author::create([
             'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'email' => $this->faker->email,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
         ]);
         Book::insert([
-            'title' => $this->faker->title,
+            'title'     => $this->faker->title,
             'author_id' => $author->id,
-            'price' => 150,
-            'year' => $this->faker->year,
+            'price'     => 150,
+            'year'      => $this->faker->year,
         ]);
 
         $book = Book::select(
@@ -166,24 +167,24 @@ abstract class BaseProjectionTest extends BaseTest
     {
         $author = Author::create([
             'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'email' => $this->faker->email,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
         ]);
         Book::insert([
             [
-                'title' => $this->faker->title,
-                'author_id' => $author->id,
-                'price' => 150,
-                'year' => $this->faker->year,
+                'title'       => $this->faker->title,
+                'author_id'   => $author->id,
+                'price'       => 150,
+                'year'        => $this->faker->year,
                 'description' => null,
             ],
             [
-                'title' => $this->faker->title,
-                'author_id' => $author->id,
-                'price' => 150,
-                'year' => $this->faker->year,
-                'description' => $this->faker->text
-            ]
+                'title'       => $this->faker->title,
+                'author_id'   => $author->id,
+                'price'       => 150,
+                'year'        => $this->faker->year,
+                'description' => $this->faker->text,
+            ],
         ]);
 
         $books = Book::select(
@@ -201,20 +202,20 @@ abstract class BaseProjectionTest extends BaseTest
 
     public function testCondition()
     {
-        $queryResult = DB::selectOne('select ' .
-            QE::condition(1, 1)->as('equal') . ',' .
-            QE::condition(1, '=', 1)->as('equal_2') . ',' .
-            QE::condition(2, '>', 1)->as('greater') . ',' .
-            QE::condition(2, '>=', 1)->as('greater_equal') . ',' .
-            QE::condition(2, '>=', 2)->as('greater_equal_2') . ',' .
-            QE::condition(1, '<', 2)->as('less') . ',' .
-            QE::condition(1, '<=', 2)->as('less_equal') . ',' .
-            QE::condition(1, '<=', 1)->as('less_equal_2') . ',' .
-            QE::condition('a', 'like', 'a')->as('like') . ',' .
-            QE::condition(1, '<>', 2)->as('not_equal') . ',' .
-            QE::condition(1, '!=', 2)->as('not_equal_2') . ',' .
-            QE::condition('a', 'not like', 'b')->as('not_like') . ',' .
-            QE::condition('b', 'in', ['a', 'b', 'c', 'd'])->as('in') . ',' .
+        $queryResult = DB::selectOne('select '.
+            QE::condition(1, 1)->as('equal').','.
+            QE::condition(1, '=', 1)->as('equal_2').','.
+            QE::condition(2, '>', 1)->as('greater').','.
+            QE::condition(2, '>=', 1)->as('greater_equal').','.
+            QE::condition(2, '>=', 2)->as('greater_equal_2').','.
+            QE::condition(1, '<', 2)->as('less').','.
+            QE::condition(1, '<=', 2)->as('less_equal').','.
+            QE::condition(1, '<=', 1)->as('less_equal_2').','.
+            QE::condition('a', 'like', 'a')->as('like').','.
+            QE::condition(1, '<>', 2)->as('not_equal').','.
+            QE::condition(1, '!=', 2)->as('not_equal_2').','.
+            QE::condition('a', 'not like', 'b')->as('not_like').','.
+            QE::condition('b', 'in', ['a', 'b', 'c', 'd'])->as('in').','.
             QE::condition('e', 'not in', ['a', 'b', 'c', 'd'])->as('not_in'));
 
         self::assertEquals(1, $queryResult->equal_2);
@@ -237,14 +238,14 @@ abstract class BaseProjectionTest extends BaseTest
     {
         $datetime = $this->faker->dateTime;
 
-        $queryResult = DB::selectOne('select ' .
-            QE::addDate($datetime, 2, Unit::SECOND)->as('created_at_modified_second') . ',' .
-            QE::addDate($datetime, 2, Unit::MINUTE)->as('created_at_modified_minute') . ',' .
-            QE::addDate($datetime, 2, Unit::HOUR)->as('created_at_modified_hour') . ',' .
-            QE::addDate($datetime, 2, Unit::DAY)->as('created_at_modified_day') . ',' .
-            QE::addDate($datetime, 2, Unit::WEEK)->as('created_at_modified_week') . ',' .
-            QE::addDate($datetime, 2, Unit::MONTH)->as('created_at_modified_month') . ',' .
-            QE::addDate($datetime, 2, Unit::QUARTER)->as('created_at_modified_quarter') . ',' .
+        $queryResult = DB::selectOne('select '.
+            QE::addDate($datetime, 2, Unit::SECOND)->as('created_at_modified_second').','.
+            QE::addDate($datetime, 2, Unit::MINUTE)->as('created_at_modified_minute').','.
+            QE::addDate($datetime, 2, Unit::HOUR)->as('created_at_modified_hour').','.
+            QE::addDate($datetime, 2, Unit::DAY)->as('created_at_modified_day').','.
+            QE::addDate($datetime, 2, Unit::WEEK)->as('created_at_modified_week').','.
+            QE::addDate($datetime, 2, Unit::MONTH)->as('created_at_modified_month').','.
+            QE::addDate($datetime, 2, Unit::QUARTER)->as('created_at_modified_quarter').','.
             QE::addDate($datetime, 2, Unit::YEAR)->as('created_at_modified_year'));
 
         self::assertEquals(Carbon::parse($datetime)->addSeconds(2)->toDateTimeString(), $queryResult->created_at_modified_second);
@@ -260,7 +261,7 @@ abstract class BaseProjectionTest extends BaseTest
     public function testCurrentDate()
     {
         $author = DB::selectOne(
-            'select ' . QE::currentDate()->as('d')
+            'select '.QE::currentDate()->as('d')
         );
 
         $actual = $author->d;
@@ -272,7 +273,7 @@ abstract class BaseProjectionTest extends BaseTest
     public function testCurrentTime()
     {
         $queryResult = DB::selectOne(
-            'select ' . QE::currentTime()->as('result')
+            'select '.QE::currentTime()->as('result')
         );
 
         $actual = $queryResult->result;
@@ -287,7 +288,7 @@ abstract class BaseProjectionTest extends BaseTest
         $datetime = $this->faker->dateTime;
 
         $author = DB::selectOne(
-            'select ' . QE::date($datetime)->as('result')
+            'select '.QE::date($datetime)->as('result')
         );
 
         $actual = $author->result;
@@ -302,7 +303,7 @@ abstract class BaseProjectionTest extends BaseTest
         $date2 = $this->faker->date;
 
         $author = DB::selectOne(
-            'select ' . QE::dateDiff($date1, $date2)->as('result')
+            'select '.QE::dateDiff($date1, $date2)->as('result')
         );
 
         $actual = $author->result;
@@ -316,7 +317,7 @@ abstract class BaseProjectionTest extends BaseTest
         $datetime = $this->faker->dateTime;
 
         $queryResult = DB::selectOne(
-            'select ' . QE::hour($datetime)->as('result')
+            'select '.QE::hour($datetime)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -330,7 +331,7 @@ abstract class BaseProjectionTest extends BaseTest
         $datetime = $this->faker->dateTime;
 
         $queryResult = DB::selectOne(
-            'select ' . QE::minute($datetime)->as('result')
+            'select '.QE::minute($datetime)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -344,7 +345,7 @@ abstract class BaseProjectionTest extends BaseTest
         $datetime = $this->faker->dateTime;
 
         $queryResult = DB::selectOne(
-            'select ' . QE::month($datetime)->as('result')
+            'select '.QE::month($datetime)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -358,7 +359,7 @@ abstract class BaseProjectionTest extends BaseTest
         $datetime = $this->faker->dateTime;
 
         $queryResult = DB::selectOne(
-            'select ' . QE::monthName($datetime)->as('result')
+            'select '.QE::monthName($datetime)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -370,7 +371,7 @@ abstract class BaseProjectionTest extends BaseTest
     public function testNow()
     {
         $queryResult = DB::selectOne(
-            'select ' . QE::now()->as('result'),
+            'select '.QE::now()->as('result'),
         );
 
         $actual = $queryResult->result;
@@ -385,7 +386,7 @@ abstract class BaseProjectionTest extends BaseTest
         $datetime = $this->faker->dateTime;
 
         $queryResult = DB::selectOne(
-            'select ' . QE::second($datetime)->as('result')
+            'select '.QE::second($datetime)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -398,14 +399,14 @@ abstract class BaseProjectionTest extends BaseTest
     {
         $datetime = $this->faker->dateTime;
 
-        $queryResult = DB::selectOne('select ' .
-            QE::subDate($datetime, 2, Unit::SECOND)->as('created_at_modified_second') . ',' .
-            QE::subDate($datetime, 2, Unit::MINUTE)->as('created_at_modified_minute') . ',' .
-            QE::subDate($datetime, 2, Unit::HOUR)->as('created_at_modified_hour') . ',' .
-            QE::subDate($datetime, 2, Unit::DAY)->as('created_at_modified_day') . ',' .
-            QE::subDate($datetime, 2, Unit::WEEK)->as('created_at_modified_week') . ',' .
-            QE::subDate($datetime, 2, Unit::MONTH)->as('created_at_modified_month') . ',' .
-            QE::subDate($datetime, 2, Unit::QUARTER)->as('created_at_modified_quarter') . ',' .
+        $queryResult = DB::selectOne('select '.
+            QE::subDate($datetime, 2, Unit::SECOND)->as('created_at_modified_second').','.
+            QE::subDate($datetime, 2, Unit::MINUTE)->as('created_at_modified_minute').','.
+            QE::subDate($datetime, 2, Unit::HOUR)->as('created_at_modified_hour').','.
+            QE::subDate($datetime, 2, Unit::DAY)->as('created_at_modified_day').','.
+            QE::subDate($datetime, 2, Unit::WEEK)->as('created_at_modified_week').','.
+            QE::subDate($datetime, 2, Unit::MONTH)->as('created_at_modified_month').','.
+            QE::subDate($datetime, 2, Unit::QUARTER)->as('created_at_modified_quarter').','.
             QE::subDate($datetime, 2, Unit::YEAR)->as('created_at_modified_year'));
 
         self::assertEquals(Carbon::parse($datetime)->subSeconds(2)->toDateTimeString(), $queryResult->created_at_modified_second);
@@ -423,7 +424,7 @@ abstract class BaseProjectionTest extends BaseTest
         $datetime = $this->faker->dateTime;
 
         $queryResult = DB::selectOne(
-            'select ' . QE::time($datetime)->as('result')
+            'select '.QE::time($datetime)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -437,7 +438,7 @@ abstract class BaseProjectionTest extends BaseTest
         $datetime = $this->faker->dateTime;
 
         $queryResult = DB::selectOne(
-            'select ' . QE::dayOfWeek($datetime)->as('result')
+            'select '.QE::dayOfWeek($datetime)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -451,7 +452,7 @@ abstract class BaseProjectionTest extends BaseTest
         $datetime = $this->faker->dateTime;
 
         $queryResult = DB::selectOne(
-            'select ' . QE::year($datetime)->as('result')
+            'select '.QE::year($datetime)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -465,8 +466,8 @@ abstract class BaseProjectionTest extends BaseTest
         $number_1 = $this->faker->numberBetween(-1000, 0);
         $number_2 = $this->faker->numberBetween();
 
-        $queryResult = DB::selectOne('select ' .
-            QE::abs($number_1)->as('result_1') . ',' .
+        $queryResult = DB::selectOne('select '.
+            QE::abs($number_1)->as('result_1').','.
             QE::abs($number_2)->as('result_2'));
 
         $actual_1 = $queryResult->result_1;
@@ -485,7 +486,7 @@ abstract class BaseProjectionTest extends BaseTest
         $number = $this->faker->randomFloat(min: -1, max: 1);
 
         $queryResult = DB::selectOne(
-            'select ' . QE::acos($number)->as('result'),
+            'select '.QE::acos($number)->as('result'),
         );
 
         $actual = $queryResult->result;
@@ -500,7 +501,7 @@ abstract class BaseProjectionTest extends BaseTest
         $number_2 = $this->faker->randomFloat();
 
         $queryResult = DB::selectOne(
-            'select ' . QE::add($number_1, $number_2)->as('result')
+            'select '.QE::add($number_1, $number_2)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -514,7 +515,7 @@ abstract class BaseProjectionTest extends BaseTest
         $number = $this->faker->randomFloat(min: -1, max: 1);
 
         $queryResult = DB::selectOne(
-            'select ' . QE::asin($number)->as('result'),
+            'select '.QE::asin($number)->as('result'),
         );
 
         $actual = $queryResult->result;
@@ -528,7 +529,7 @@ abstract class BaseProjectionTest extends BaseTest
         $number = $this->faker->randomFloat(min: -100, max: 100);
 
         $queryResult = DB::selectOne(
-            'select ' . QE::atan($number)->as('result'),
+            'select '.QE::atan($number)->as('result'),
         );
 
         $actual = $queryResult->result;
@@ -543,7 +544,7 @@ abstract class BaseProjectionTest extends BaseTest
         $x = $this->faker->randomFloat();
 
         $queryResult = DB::selectOne(
-            'select ' . QE::atan2($y, $x)->as('result'),
+            'select '.QE::atan2($y, $x)->as('result'),
         );
 
         $actual = $queryResult->result;
@@ -556,22 +557,22 @@ abstract class BaseProjectionTest extends BaseTest
     {
         $author_1 = Author::create([
             'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'email' => $this->faker->email,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
         ]);
         $author_2 = Author::create([
             'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'email' => $this->faker->email,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
         ]);
         $count = $this->faker->numberBetween(2, 100);
         $booksToInsert = [];
         for ($i = 0; $i < $count; $i++) {
             $booksToInsert[] = [
-                'title' => $this->faker->title,
+                'title'       => $this->faker->title,
                 'description' => $this->faker->text,
-                'price' => $this->faker->randomFloat(2, 1, 100),
-                'year' => $this->faker->year,
+                'price'       => $this->faker->randomFloat(2, 1, 100),
+                'year'        => $this->faker->year,
             ];
             if ($i % 2 == 0) {
                 $booksToInsert[$i]['author_id'] = $author_1->id;
@@ -605,7 +606,7 @@ abstract class BaseProjectionTest extends BaseTest
         $number = $this->faker->randomFloat();
 
         $queryResult = DB::selectOne(
-            'select ' . QE::ceil($number)->as('result')
+            'select '.QE::ceil($number)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -619,7 +620,7 @@ abstract class BaseProjectionTest extends BaseTest
         $number = $this->faker->randomFloat();
 
         $queryResult = DB::selectOne(
-            'select ' . QE::cos($number)->as('result')
+            'select '.QE::cos($number)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -633,7 +634,7 @@ abstract class BaseProjectionTest extends BaseTest
         $number = $this->faker->randomFloat(2, 1, 10);
 
         $queryResult = DB::selectOne(
-            'select ' . QE::cot($number)->as('result')
+            'select '.QE::cot($number)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -646,22 +647,22 @@ abstract class BaseProjectionTest extends BaseTest
     {
         $author_1 = Author::create([
             'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'email' => $this->faker->email,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
         ]);
         $author_2 = Author::create([
             'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'email' => $this->faker->email,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
         ]);
         $count = $this->faker->numberBetween(2, 100);
         $booksToInsert = [];
         for ($i = 0; $i < $count; $i++) {
             $booksToInsert[] = [
-                'title' => $this->faker->title,
+                'title'       => $this->faker->title,
                 'description' => $this->faker->text,
-                'price' => 100,
-                'year' => $this->faker->year,
+                'price'       => 100,
+                'year'        => $this->faker->year,
             ];
             if ($i % 2 == 0) {
                 $booksToInsert[$i]['author_id'] = $author_1->id;
@@ -695,7 +696,7 @@ abstract class BaseProjectionTest extends BaseTest
         $number = $this->faker->randomFloat();
 
         $queryResult = DB::selectOne(
-            'select ' . QE::radianToDegrees($number)->as('result')
+            'select '.QE::radianToDegrees($number)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -706,11 +707,11 @@ abstract class BaseProjectionTest extends BaseTest
 
     public function testDivide()
     {
-        $number_1 = $this->faker->randomFloat(2,);
+        $number_1 = $this->faker->randomFloat(2);
         $number_2 = $this->faker->randomFloat(2, 1);
 
         $queryResult = DB::selectOne(
-            'select ' . QE::divide($number_1, $number_2)->as('result')
+            'select '.QE::divide($number_1, $number_2)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -724,7 +725,7 @@ abstract class BaseProjectionTest extends BaseTest
         $number = $this->faker->randomFloat(max: 10);
 
         $queryResult = DB::selectOne(
-            'select ' . QE::exp($number)->as('result')
+            'select '.QE::exp($number)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -738,7 +739,7 @@ abstract class BaseProjectionTest extends BaseTest
         $number = $this->faker->randomFloat();
 
         $queryResult = DB::selectOne(
-            'select ' . QE::floor($number)->as('result')
+            'select '.QE::floor($number)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -756,7 +757,7 @@ abstract class BaseProjectionTest extends BaseTest
         }
 
         $queryResult = DB::selectOne(
-            'select ' . QE::greatest(...$array)->as('result')
+            'select '.QE::greatest(...$array)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -774,7 +775,7 @@ abstract class BaseProjectionTest extends BaseTest
         }
 
         $queryResult = DB::selectOne(
-            'select ' . QE::least(...$array)->as('result')
+            'select '.QE::least(...$array)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -788,7 +789,7 @@ abstract class BaseProjectionTest extends BaseTest
         $number = $this->faker->randomFloat(min: 1);
 
         $queryResult = DB::selectOne(
-            'select ' . QE::ln($number)->as('result')
+            'select '.QE::ln($number)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -803,7 +804,7 @@ abstract class BaseProjectionTest extends BaseTest
         $base = $this->faker->numberBetween(2, 1000);
 
         $queryResult = DB::selectOne(
-            'select ' . QE::log($number, $base)->as('result')
+            'select '.QE::log($number, $base)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -816,22 +817,22 @@ abstract class BaseProjectionTest extends BaseTest
     {
         $author_1 = Author::create([
             'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'email' => $this->faker->email,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
         ]);
         $author_2 = Author::create([
             'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'email' => $this->faker->email,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
         ]);
         $count = $this->faker->numberBetween(2, 100);
         $booksToInsert = [];
         for ($i = 0; $i < $count; $i++) {
             $booksToInsert[] = [
-                'title' => $this->faker->title,
+                'title'       => $this->faker->title,
                 'description' => $this->faker->text,
-                'price' => $this->faker->randomFloat(2, 0, 100),
-                'year' => $this->faker->year,
+                'price'       => $this->faker->randomFloat(2, 0, 100),
+                'year'        => $this->faker->year,
             ];
             if ($i % 2 == 0) {
                 $booksToInsert[$i]['author_id'] = $author_1->id;
@@ -864,22 +865,22 @@ abstract class BaseProjectionTest extends BaseTest
     {
         $author_1 = Author::create([
             'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'email' => $this->faker->email,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
         ]);
         $author_2 = Author::create([
             'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'email' => $this->faker->email,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
         ]);
         $count = $this->faker->numberBetween(2, 100);
         $booksToInsert = [];
         for ($i = 0; $i < $count; $i++) {
             $booksToInsert[] = [
-                'title' => $this->faker->title,
+                'title'       => $this->faker->title,
                 'description' => $this->faker->text,
-                'price' => $this->faker->randomFloat(min: 0, max: 100),
-                'year' => $this->faker->year,
+                'price'       => $this->faker->randomFloat(min: 0, max: 100),
+                'year'        => $this->faker->year,
             ];
             if ($i % 2 == 0) {
                 $booksToInsert[$i]['author_id'] = $author_1->id;
@@ -914,7 +915,7 @@ abstract class BaseProjectionTest extends BaseTest
         $number_2 = $this->faker->numberBetween(1);
 
         $queryResult = DB::selectOne(
-            'select ' . QE::mod($number_1, $number_2)->as('result')
+            'select '.QE::mod($number_1, $number_2)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -929,7 +930,7 @@ abstract class BaseProjectionTest extends BaseTest
         $number_2 = $this->faker->randomFloat(2, 1, 1000);
 
         $queryResult = DB::selectOne(
-            'select ' . QE::multiply($number_1, $number_2)->as('result')
+            'select '.QE::multiply($number_1, $number_2)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -941,7 +942,7 @@ abstract class BaseProjectionTest extends BaseTest
     public function testPi()
     {
         $queryResult = DB::selectOne(
-            'select ' . QE::pi()->as('result')
+            'select '.QE::pi()->as('result')
         );
 
         $actual = $queryResult->result;
@@ -956,7 +957,7 @@ abstract class BaseProjectionTest extends BaseTest
         $number_2 = $this->faker->numberBetween(2, 5);
 
         $queryResult = DB::selectOne(
-            'select ' . QE::pow($number_1, $number_2)->as('result')
+            'select '.QE::pow($number_1, $number_2)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -970,7 +971,7 @@ abstract class BaseProjectionTest extends BaseTest
         $number = $this->faker->randomFloat();
 
         $queryResult = DB::selectOne(
-            'select ' . QE::degreesToRadian($number)->as('result')
+            'select '.QE::degreesToRadian($number)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -981,15 +982,14 @@ abstract class BaseProjectionTest extends BaseTest
 
     public function testRand()
     {
-        $queryResult_1 = DB::selectOne('select ' . QE::rand()->as('rand'));
+        $queryResult_1 = DB::selectOne('select '.QE::rand()->as('rand'));
         self::assertIsNumeric($queryResult_1->rand);
-
 
         if ($this->getDatabaseEngine() == 'pgsql') {
             self::expectException(InvalidArgumentException::class);
         }
-        $queryResult_2 = DB::selectOne('select ' .
-            QE::rand(1)->as('rand_with_seed_1') . ',' .
+        $queryResult_2 = DB::selectOne('select '.
+            QE::rand(1)->as('rand_with_seed_1').','.
             QE::rand(1)->as('rand_with_seed_2'));
 
         self::assertEquals($queryResult_2->rand_with_seed_1, $queryResult_2->rand_with_seed_2);
@@ -999,8 +999,8 @@ abstract class BaseProjectionTest extends BaseTest
     {
         $number = $this->faker->randomFloat();
 
-        $queryResult = DB::selectOne('select ' .
-            QE::round($number)->as('round_1') . ',' .
+        $queryResult = DB::selectOne('select '.
+            QE::round($number)->as('round_1').','.
             QE::round($number, 2)->as('round_2'));
 
         self::assertEquals(round($number), $queryResult->round_1);
@@ -1011,7 +1011,7 @@ abstract class BaseProjectionTest extends BaseTest
     {
         $number = $this->faker->randomFloat(min: -100, max: 100);
 
-        $queryResult = DB::selectOne('select ' . QE::sign($number)->as('result'));
+        $queryResult = DB::selectOne('select '.QE::sign($number)->as('result'));
 
         $expected = $number / abs($number);
         $actual = $queryResult->result;
@@ -1024,7 +1024,7 @@ abstract class BaseProjectionTest extends BaseTest
         $number = $this->faker->randomFloat();
 
         $queryResult = DB::selectOne(
-            'select ' . QE::sin($number)->as('result')
+            'select '.QE::sin($number)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -1038,7 +1038,7 @@ abstract class BaseProjectionTest extends BaseTest
         $number = $this->faker->randomFloat();
 
         $queryResult = DB::selectOne(
-            'select ' . QE::sqrt($number)->as('result')
+            'select '.QE::sqrt($number)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -1053,7 +1053,7 @@ abstract class BaseProjectionTest extends BaseTest
         $number_2 = $this->faker->randomFloat();
 
         $queryResult = DB::selectOne(
-            'select ' . QE::subtract($number_1, $number_2)->as('result')
+            'select '.QE::subtract($number_1, $number_2)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -1066,22 +1066,22 @@ abstract class BaseProjectionTest extends BaseTest
     {
         $author_1 = Author::create([
             'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'email' => $this->faker->email,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
         ]);
         $author_2 = Author::create([
             'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'email' => $this->faker->email,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
         ]);
         $count = $this->faker->numberBetween(2, 100);
         $booksToInsert = [];
         for ($i = 0; $i < $count; $i++) {
             $booksToInsert[] = [
-                'title' => $this->faker->title,
+                'title'       => $this->faker->title,
                 'description' => $this->faker->text,
-                'price' => $this->faker->randomFloat(2, 1, 100),
-                'year' => $this->faker->year,
+                'price'       => $this->faker->randomFloat(2, 1, 100),
+                'year'        => $this->faker->year,
             ];
             if ($i % 2 == 0) {
                 $booksToInsert[$i]['author_id'] = $author_1->id;
@@ -1115,7 +1115,7 @@ abstract class BaseProjectionTest extends BaseTest
         $number = $this->faker->randomFloat();
 
         $queryResult = DB::selectOne(
-            'select ' . QE::tan($number)->as('result')
+            'select '.QE::tan($number)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -1128,8 +1128,8 @@ abstract class BaseProjectionTest extends BaseTest
     {
         Author::insert([
             'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'email' => $this->faker->email,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
         ]);
         $author = Author::select(
             'first_name',
@@ -1138,7 +1138,7 @@ abstract class BaseProjectionTest extends BaseTest
         )->first();
 
         $actual = $author->result;
-        $expected = '123' . $author->first_name . ' ' . $author->last_name;
+        $expected = '123'.$author->first_name.' '.$author->last_name;
 
         self::assertEquals($expected, $actual);
     }
@@ -1147,8 +1147,8 @@ abstract class BaseProjectionTest extends BaseTest
     {
         Author::insert([
             'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'email' => $this->faker->email,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
         ]);
         $author = Author::select(
             'first_name',
@@ -1157,7 +1157,7 @@ abstract class BaseProjectionTest extends BaseTest
         )->first();
 
         $actual = $author->result;
-        $expected = $author->first_name . ' ' . $author->last_name;
+        $expected = $author->first_name.' '.$author->last_name;
 
         self::assertEquals($expected, $actual);
     }
@@ -1165,7 +1165,7 @@ abstract class BaseProjectionTest extends BaseTest
     public function testLeft()
     {
         $queryResult = DB::selectOne(
-            'select ' . QE::left('Query Enrich', 5)->as('result')
+            'select '.QE::left('Query Enrich', 5)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -1179,7 +1179,7 @@ abstract class BaseProjectionTest extends BaseTest
         $string = $this->faker->name;
 
         $queryResult = DB::selectOne(
-            'select ' . QE::length($string)->as('result')
+            'select '.QE::length($string)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -1193,7 +1193,7 @@ abstract class BaseProjectionTest extends BaseTest
         $string = 'Query Enrich';
 
         $queryResult = DB::selectOne(
-            'select ' . QE::lower($string)->as('result')
+            'select '.QE::lower($string)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -1207,7 +1207,7 @@ abstract class BaseProjectionTest extends BaseTest
         $string = '  Query Enrich  ';
 
         $queryResult = DB::selectOne(
-            'select ' . QE::ltrim($string)->as('result')
+            'select '.QE::ltrim($string)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -1219,7 +1219,7 @@ abstract class BaseProjectionTest extends BaseTest
     public function testPadLeft()
     {
         $queryResult = DB::selectOne(
-            'select ' . QE::padLeft('James', 10, '-=')->as('result')
+            'select '.QE::padLeft('James', 10, '-=')->as('result')
         );
 
         $actual = $queryResult->result;
@@ -1231,7 +1231,7 @@ abstract class BaseProjectionTest extends BaseTest
     public function testPadRight()
     {
         $queryResult = DB::selectOne(
-            'select ' . QE::padRight('James', 10, '-=')->as('result')
+            'select '.QE::padRight('James', 10, '-=')->as('result')
         );
 
         $actual = $queryResult->result;
@@ -1243,7 +1243,7 @@ abstract class BaseProjectionTest extends BaseTest
     public function testPosition()
     {
         $queryResult = DB::selectOne(
-            'select ' . QE::position('World', 'Hello, World!')->as('result')
+            'select '.QE::position('World', 'Hello, World!')->as('result')
         );
 
         $actual = $queryResult->result;
@@ -1258,7 +1258,7 @@ abstract class BaseProjectionTest extends BaseTest
         $number = $this->faker->numberBetween(2, 10);
 
         $queryResult = DB::selectOne(
-            'select ' . QE::repeat($string, $number)->as('result')
+            'select '.QE::repeat($string, $number)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -1274,7 +1274,7 @@ abstract class BaseProjectionTest extends BaseTest
         $newString = 'Laravel';
 
         $queryResult = DB::selectOne(
-            'select ' . QE::replace($string, $substring, $newString)->as('result')
+            'select '.QE::replace($string, $substring, $newString)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -1288,7 +1288,7 @@ abstract class BaseProjectionTest extends BaseTest
         $string = 'Hello!';
 
         $queryResult = DB::selectOne(
-            'select ' . QE::reverse($string)->as('result')
+            'select '.QE::reverse($string)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -1300,7 +1300,7 @@ abstract class BaseProjectionTest extends BaseTest
     public function testRight()
     {
         $author = DB::selectOne(
-            'select ' . QE::right('Query Enrich', 6)->as('result')
+            'select '.QE::right('Query Enrich', 6)->as('result')
         );
 
         $actual = $author->result;
@@ -1314,7 +1314,7 @@ abstract class BaseProjectionTest extends BaseTest
         $string = '  Query Enrich  ';
 
         $queryResult = DB::selectOne(
-            'select ' . QE::rtrim($string)->as('result')
+            'select '.QE::rtrim($string)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -1326,7 +1326,7 @@ abstract class BaseProjectionTest extends BaseTest
     public function testSpace()
     {
         $queryResult = DB::selectOne(
-            'select ' . QE::space(8)->as('result')
+            'select '.QE::space(8)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -1342,8 +1342,8 @@ abstract class BaseProjectionTest extends BaseTest
         $length = 7;
 
         $queryResult = DB::selectOne(
-            'select ' .
-            QE::substr($string, $start, $length)->as('result_1') . ',' .
+            'select '.
+            QE::substr($string, $start, $length)->as('result_1').','.
             QE::substr($string, $start)->as('result_2')
         );
 
@@ -1363,7 +1363,7 @@ abstract class BaseProjectionTest extends BaseTest
         $string = '  Query Enrich  ';
 
         $queryResult = DB::selectOne(
-            'select ' . QE::trim($string)->as('result')
+            'select '.QE::trim($string)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -1377,7 +1377,7 @@ abstract class BaseProjectionTest extends BaseTest
         $string = 'Query Enrich';
 
         $queryResult = DB::selectOne(
-            'select ' . QE::upper($string)->as('result')
+            'select '.QE::upper($string)->as('result')
         );
 
         $actual = $queryResult->result;
@@ -1390,21 +1390,21 @@ abstract class BaseProjectionTest extends BaseTest
     {
         $author_1 = Author::create([
             'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'email' => $this->faker->email,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
         ]);
         $author_2 = Author::create([
             'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'email' => $this->faker->email,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
         ]);
         Book::insert(
             [
-                'title' => $this->faker->title,
+                'title'       => $this->faker->title,
                 'description' => $this->faker->text,
-                'author_id' => $author_1->id,
-                'price' => 150,
-                'year' => $this->faker->year,
+                'author_id'   => $author_1->id,
+                'price'       => 150,
+                'year'        => $this->faker->year,
             ],
         );
 
@@ -1436,10 +1436,11 @@ abstract class BaseProjectionTest extends BaseTest
         if ($this->getDatabaseEngine() === 'sqlsrv') {
             self::expectException(QueryException::class);
         }
-        $queryResult = DB::selectOne('select ' .
-            QE::and($false, $false)->as('result_1') . ',' .
-            QE::and($false, $true)->as('result_2') . ',' .
-            QE::and($true, $false)->as('result_3') . ',' .
+        $queryResult = DB::selectOne(
+            'select '.
+            QE::and($false, $false)->as('result_1').','.
+            QE::and($false, $true)->as('result_2').','.
+            QE::and($true, $false)->as('result_3').','.
             QE::and($true, $true)->as('result_4')
         );
         if ($this->getDatabaseEngine() === 'sqlsrv') {
@@ -1460,10 +1461,10 @@ abstract class BaseProjectionTest extends BaseTest
         if ($this->getDatabaseEngine() === 'sqlsrv') {
             self::expectException(QueryException::class);
         }
-        $queryResult = DB::selectOne('select ' .
-            QE::or($false, $false)->as('result_1') . ',' .
-            QE::or($false, $true)->as('result_2') . ',' .
-            QE::or($true, $false)->as('result_3') . ',' .
+        $queryResult = DB::selectOne('select '.
+            QE::or($false, $false)->as('result_1').','.
+            QE::or($false, $true)->as('result_2').','.
+            QE::or($true, $false)->as('result_3').','.
             QE::or($true, $true)->as('result_4'));
         if ($this->getDatabaseEngine() === 'sqlsrv') {
             return;
@@ -1483,8 +1484,8 @@ abstract class BaseProjectionTest extends BaseTest
         if ($this->getDatabaseEngine() === 'sqlsrv') {
             self::expectException(QueryException::class);
         }
-        $queryResult = DB::selectOne('select ' .
-            QE::not($false)->as('result_1') . ',' .
+        $queryResult = DB::selectOne('select '.
+            QE::not($false)->as('result_1').','.
             QE::not($true)->as('result_2'));
         if ($this->getDatabaseEngine() === 'sqlsrv') {
             return;

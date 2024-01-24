@@ -24,7 +24,7 @@ class Ceil extends DBFunction
             case EDatabaseEngine::MySQL:
             case EDatabaseEngine::PostgreSQL:
             case EDatabaseEngine::SQLite:
-            return $this->getFunctionCallSql('ceil', [$this->parameter]);
+                return $this->getFunctionCallSql('ceil', [$this->parameter]);
             case EDatabaseEngine::SQLServer:
                 return $this->getFunctionCallSql('ceiling', [$this->parameter]);
         }

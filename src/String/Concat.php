@@ -22,6 +22,7 @@ class Concat extends DBFunction
         if ($this->getDatabaseEngine() == EDatabaseEngine::SQLite) {
             return $this->getOperatorSeparatedSql('||', $this->parameters);
         }
+
         return $this->getFunctionCallSql('concat', $this->parameters);
     }
 }

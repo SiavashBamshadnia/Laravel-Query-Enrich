@@ -25,9 +25,10 @@ class MonthName extends DBFunction
         switch ($this->getDatabaseEngine()) {
             case EDatabaseEngine::MySQL:
             case EDatabaseEngine::SQLite:
-            return $this->getFunctionCallSql('monthname', [$this->parameter]);
+                return $this->getFunctionCallSql('monthname', [$this->parameter]);
             case EDatabaseEngine::PostgreSQL:
                 $parameter = $this->escape($this->parameter);
+
                 return "initcap(trim(to_char($parameter, 'month')))";
             case EDatabaseEngine::SQLServer:
                 return $this->getFunctionCallSql('datename', [QE::raw('month'), $this->parameter]);

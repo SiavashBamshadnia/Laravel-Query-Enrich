@@ -57,7 +57,7 @@ class AddDate extends DBFunction
                     'convert',
                     [
                         QE::raw($this->getFunctionCallSql('datetime2', [0])),
-                        QE::raw($this->getFunctionCallSql('dateadd', [$this->interval, $this->value, $this->subject]))
+                        QE::raw($this->getFunctionCallSql('dateadd', [$this->interval, $this->value, $this->subject])),
                     ]
                 );
         }

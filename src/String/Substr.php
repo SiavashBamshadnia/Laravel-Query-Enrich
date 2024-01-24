@@ -31,11 +31,13 @@ class Substr extends DBFunction
                 if ($this->length === null) {
                     return $this->getFunctionCallSql('substr', [$this->string, $this->start]);
                 }
+
                 return $this->getFunctionCallSql('substr', [$this->string, $this->start, $this->length]);
             case EDatabaseEngine::SQLServer:
                 if ($this->length === null) {
                     return $this->getFunctionCallSql('stuff', [$this->string, 1, QE::subtract($this->start, 1), '']);
                 }
+
                 return $this->getFunctionCallSql('substring', [$this->string, $this->start, $this->length]);
         }
     }

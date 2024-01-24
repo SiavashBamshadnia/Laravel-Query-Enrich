@@ -15,30 +15,35 @@ class Condition extends DBFunction
 
     /**
      * Valid operators that can be used in the condition.
+     *
      * @var array
      */
     private const VALID_OPERATORS = ['=', '<>', '!=', 'like', 'not like', '<', '>', '<=', '>=', 'is', 'in', 'not in'];
 
     /**
      * Operators that accept arrays as parameters.
+     *
      * @var array
      */
     private const ARRAY_OPERATORS = ['in', 'not in'];
 
     /**
      * First parameter of the condition.
+     *
      * @var mixed
      */
     private mixed $parameter1;
 
     /**
      * Operator of the condition.
+     *
      * @var string
      */
     private string $operator;
 
     /**
      * Second parameter of the condition.
+     *
      * @var mixed
      */
     private mixed $parameter2;
@@ -46,9 +51,10 @@ class Condition extends DBFunction
     /**
      * Constructs a new condition.
      *
-     * @param mixed $parameter1 The first parameter of the condition.
-     * @param string $operator The operator of the condition. Default is '='.
-     * @param mixed $parameter2 The second parameter of the condition.
+     * @param mixed  $parameter1 The first parameter of the condition.
+     * @param string $operator   The operator of the condition. Default is '='.
+     * @param mixed  $parameter2 The second parameter of the condition.
+     *
      * @throws InvalidArgumentException If the operator is not valid.
      */
     public function __construct(mixed $parameter1, mixed $operator = null, mixed $parameter2 = null)
@@ -59,7 +65,7 @@ class Condition extends DBFunction
         }
 
         if (!$this->isOperatorValid($operator)) {
-            throw new InvalidArgumentException('The operator ' . $operator . ' is not supported');
+            throw new InvalidArgumentException('The operator '.$operator.' is not supported');
         }
 
         $this->parameter1 = $parameter1;
@@ -76,9 +82,11 @@ class Condition extends DBFunction
         $operator = strtolower($operator);
 
         if (in_array($operator, self::ARRAY_OPERATORS)) {
-            $parameter2 = '(' . implode(',', $parameter2) . ')';
+            $parameter2 = '('.implode(',', $parameter2).')';
+
             return "$parameter1 $operator $parameter2";
         }
+
         return "$parameter1 $operator $parameter2";
     }
 
@@ -86,6 +94,7 @@ class Condition extends DBFunction
      * Checks if the operator is valid.
      *
      * @param string $operator The operator to check.
+     *
      * @return bool True if the operator is valid, false otherwise.
      */
     private function isOperatorValid(string $operator): bool

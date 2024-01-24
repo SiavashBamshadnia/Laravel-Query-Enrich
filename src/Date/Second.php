@@ -25,6 +25,7 @@ class Second extends DBFunction
                 return $this->getFunctionCallSql('second', [$this->parameter]);
             case EDatabaseEngine::PostgreSQL:
                 $parameter = $this->escape($this->parameter);
+
                 return "extract(second from $parameter)";
             case EDatabaseEngine::SQLite:
                 return $this->getFunctionCallSql('strftime', [QE::raw("'%S'"), $this->parameter]);

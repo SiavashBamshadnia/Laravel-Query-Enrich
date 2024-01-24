@@ -26,7 +26,7 @@ class IsNull extends DBFunction
             case EDatabaseEngine::PostgreSQL:
             case EDatabaseEngine::SQLite:
             case EDatabaseEngine::SQLServer:
-                return $this->escape($this->parameter) . " is null";
+                return $this->escape($this->parameter).' is null';
         }
     }
 }

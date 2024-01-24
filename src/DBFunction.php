@@ -17,8 +17,6 @@ use sbamtr\LaravelQueryEnrich\Exception\DatabaseNotSupportedException;
  * This class is used to represent SQL functions in a database-agnostic way and
  * includes methods for converting to SQL strings, configuring function behavior,
  * and escaping parameters for safe SQL execution.
- *
- * @package sbamtr\LaravelQueryEnrich
  */
 abstract class DBFunction implements Expression
 {
@@ -117,12 +115,12 @@ abstract class DBFunction implements Expression
     /**
      * Get the database engine used by the connection.
      *
-     * @return EDatabaseEngine
      * @throws DatabaseNotSupportedException If the database engine is unknown.
+     *
+     * @return EDatabaseEngine
      */
     public function getDatabaseEngine(): EDatabaseEngine
     {
-
         $driver = config('database.connections')[config('database.default')]['driver'];
         switch ($driver) {
             case 'mysql':
@@ -165,6 +163,7 @@ abstract class DBFunction implements Expression
             for ($i = 0; $i < $count; $i++) {
                 $parameter[$i] = $queryGrammar->escape($parameter[$i]);
             }
+
             return $parameter;
         }
 
@@ -182,6 +181,7 @@ abstract class DBFunction implements Expression
             $parameter = $parameter->format('Y-m-d H:i:s');
             if ($this->getDatabaseEngine() == EDatabaseEngine::PostgreSQL) {
                 $parameter = DB::escape($parameter);
+
                 return "timestamp $parameter";
             }
         }
@@ -195,6 +195,7 @@ abstract class DBFunction implements Expression
         if (is_string($parameter)) {
             $parameter = addcslashes($parameter, '%');
         }
+
         return DB::escape($parameter);
     }
 
@@ -208,6 +209,7 @@ abstract class DBFunction implements Expression
     public function as(string $alias): static
     {
         $this->alias = $alias;
+
         return $this;
     }
 
@@ -236,6 +238,7 @@ abstract class DBFunction implements Expression
 
             $sql .= " as $firstSurroundingCharacter$alias$lastSurroundingCharacter";
         }
+
         return $sql;
     }
 
@@ -247,14 +250,15 @@ abstract class DBFunction implements Expression
     public function getValue(Grammar $grammar)
     {
         $sql = $this->toSql();
+
         return DB::raw($sql);
     }
 
     /**
      * Get the SQL string for a function call with optional parameters.
      *
-     * @param string $function The function name.
-     * @param mixed $parameters The function parameters.
+     * @param string $function   The function name.
+     * @param mixed  $parameters The function parameters.
      *
      * @return string
      */
@@ -268,14 +272,15 @@ abstract class DBFunction implements Expression
             $parameters[$i] = $this->escape($parameters[$i]);
         }
         $implodedParameters = implode(', ', $parameters);
+
         return "$function($implodedParameters)";
     }
 
     /**
      * Get the SQL string for an expression with parameters separated by an operator.
      *
-     * @param string $operator The operator to separate parameters.
-     * @param mixed $parameters The parameters for the expression.
+     * @param string $operator   The operator to separate parameters.
+     * @param mixed  $parameters The parameters for the expression.
      *
      * @return string
      */
@@ -286,6 +291,7 @@ abstract class DBFunction implements Expression
             $parameters[$i] = $this->escape($parameters[$i]);
         }
         $implodedParameters = implode(" $operator ", $parameters);
+
         return "($implodedParameters)";
     }
 }

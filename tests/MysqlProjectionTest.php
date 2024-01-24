@@ -1,6 +1,5 @@
 <?php
 
-
 use Workbench\BaseTest\BaseProjectionTest;
 
 class MysqlProjectionTest extends BaseProjectionTest

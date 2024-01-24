@@ -27,7 +27,8 @@ class Least extends DBFunction
                 return $this->getFunctionCallSql('least', $this->parameters);
             case EDatabaseEngine::SQLServer:
                 $parameters = $this->escape($this->parameters);
-                $parametersString = '(' . implode('),(', $parameters) . ')';
+                $parametersString = '('.implode('),(', $parameters).')';
+
                 return "(select min(i) from (values $parametersString) AS T(i))";
         }
     }

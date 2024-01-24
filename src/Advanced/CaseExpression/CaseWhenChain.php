@@ -42,6 +42,7 @@ class CaseWhenChain extends DBFunction
         $when = new When($condition, null);
 
         $this->case->whens[] = $when;
+
         return $this;
     }
 
@@ -56,6 +57,7 @@ class CaseWhenChain extends DBFunction
     {
         $lastWhen = Arr::last($this->case->whens);
         $lastWhen->then = $result;
+
         return $this;
     }
 
@@ -69,6 +71,7 @@ class CaseWhenChain extends DBFunction
     public function else(mixed $result): CaseWhenChain
     {
         $this->case->else = $result;
+
         return $this;
     }
 

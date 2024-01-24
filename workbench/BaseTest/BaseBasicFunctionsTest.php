@@ -13,8 +13,8 @@ abstract class BaseBasicFunctionsTest extends BaseTest
     {
         Author::insert([
             'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'email' => $this->faker->email,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
         ]);
 
         $queryResult = Author::whereRaw(
@@ -28,14 +28,14 @@ abstract class BaseBasicFunctionsTest extends BaseTest
     {
         $datetime = Carbon::parse($this->faker->dateTime)->toDateTimeString();
 
-        $queryResult = DB::selectOne('SELECT ' . QE::raw('?', [$datetime])->as('result'));
+        $queryResult = DB::selectOne('SELECT '.QE::raw('?', [$datetime])->as('result'));
 
         self::assertEquals($datetime, $queryResult->result);
     }
 
     public function testEscapeNull()
     {
-        $queryResult = DB::selectOne('SELECT ' . QE::raw('?', [null])->as('result'));
+        $queryResult = DB::selectOne('SELECT '.QE::raw('?', [null])->as('result'));
 
         self::assertNull($queryResult->result);
     }

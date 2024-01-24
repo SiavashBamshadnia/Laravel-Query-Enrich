@@ -6,6 +6,7 @@ use Illuminate\Contracts\Config\Repository;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\DB;
 use Orchestra\Testbench\TestCase;
+
 use function Orchestra\Testbench\workbench_path;
 
 abstract class BaseTest extends TestCase
@@ -29,32 +30,31 @@ abstract class BaseTest extends TestCase
         // Setup default database to use sqlite :memory:
         tap($app['config'], function (Repository $config) {
             $config->set('database.connections.sqlite', [
-                'driver' => 'sqlite',
+                'driver'   => 'sqlite',
                 'database' => ':memory:',
-                'version' => '3.43.0',
+                'version'  => '3.43.0',
             ]);
             $config->set('database.connections.mysql', [
-                'driver' => 'mysql',
-                'host' => '127.0.0.1',
+                'driver'   => 'mysql',
+                'host'     => '127.0.0.1',
                 'database' => 'test',
                 'username' => 'root',
                 'password' => 'mysql',
             ]);
             $config->set('database.connections.pgsql', [
-                'driver' => 'pgsql',
-                'host' => '127.0.0.1',
+                'driver'   => 'pgsql',
+                'host'     => '127.0.0.1',
                 'database' => 'test',
                 'username' => 'postgres',
                 'password' => 'my_password',
             ]);
             $config->set('database.connections.sqlsrv', [
-                'driver' => 'sqlsrv',
-                'host' => '127.0.0.1',
+                'driver'   => 'sqlsrv',
+                'host'     => '127.0.0.1',
                 'database' => 'tempdb',
                 'username' => 'sa',
                 'password' => 'yourStrong(!)Password',
             ]);
-
 
             $config->set('database.default', $this->getDatabaseEngine());
         });

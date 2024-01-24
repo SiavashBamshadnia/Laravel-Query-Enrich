@@ -7,6 +7,7 @@ use sbamtr\LaravelQueryEnrich\Exception\InvalidArgumentException;
 use sbamtr\LaravelQueryEnrich\QE;
 use Workbench\App\Models\Author;
 use Workbench\App\Models\Book;
+
 use function sbamtr\LaravelQueryEnrich\c;
 
 abstract class BaseWhereClauseTest extends BaseTest
@@ -34,21 +35,21 @@ abstract class BaseWhereClauseTest extends BaseTest
     {
         $author_1 = Author::create([
             'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'email' => $this->faker->email,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
         ]);
         $author_2 = Author::create([
             'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'email' => $this->faker->email,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
         ]);
         Book::insert(
             [
-                'title' => $this->faker->title,
+                'title'       => $this->faker->title,
                 'description' => $this->faker->text,
-                'author_id' => $author_2->id,
-                'price' => 150,
-                'year' => $this->faker->year,
+                'author_id'   => $author_2->id,
+                'price'       => 150,
+                'year'        => $this->faker->year,
             ],
         );
 
@@ -72,23 +73,23 @@ abstract class BaseWhereClauseTest extends BaseTest
     {
         $author_1 = Author::create([
             'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'email' => $this->faker->email,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
         ]);
         Book::insert([
             [
-                'title' => $this->faker->title,
+                'title'       => $this->faker->title,
                 'description' => $this->faker->text,
-                'author_id' => $author_1->id,
-                'price' => 150,
-                'year' => $this->faker->year,
+                'author_id'   => $author_1->id,
+                'price'       => 150,
+                'year'        => $this->faker->year,
             ],
             [
-                'title' => $this->faker->title,
+                'title'       => $this->faker->title,
                 'description' => null,
-                'author_id' => $author_1->id,
-                'price' => 150,
-                'year' => $this->faker->year,
+                'author_id'   => $author_1->id,
+                'price'       => 150,
+                'year'        => $this->faker->year,
             ],
         ]);
 
@@ -106,30 +107,30 @@ abstract class BaseWhereClauseTest extends BaseTest
     {
         $author_1 = Author::create([
             'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'email' => $this->faker->email,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
         ]);
         Book::insert([
             [
-                'title' => $this->faker->title,
+                'title'       => $this->faker->title,
                 'description' => $this->faker->text,
-                'author_id' => $author_1->id,
-                'price' => 50,
-                'year' => $this->faker->year,
+                'author_id'   => $author_1->id,
+                'price'       => 50,
+                'year'        => $this->faker->year,
             ],
             [
-                'title' => $this->faker->title,
+                'title'       => $this->faker->title,
                 'description' => null,
-                'author_id' => $author_1->id,
-                'price' => 150,
-                'year' => $this->faker->year,
+                'author_id'   => $author_1->id,
+                'price'       => 150,
+                'year'        => $this->faker->year,
             ],
             [
-                'title' => $this->faker->title,
+                'title'       => $this->faker->title,
                 'description' => null,
-                'author_id' => $author_1->id,
-                'price' => 250,
-                'year' => $this->faker->year,
+                'author_id'   => $author_1->id,
+                'price'       => 250,
+                'year'        => $this->faker->year,
             ],
         ]);
 
@@ -155,30 +156,30 @@ abstract class BaseWhereClauseTest extends BaseTest
     {
         $author_1 = Author::create([
             'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'email' => $this->faker->email,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
         ]);
         Book::insert([
             [
-                'title' => $this->faker->title,
+                'title'       => $this->faker->title,
                 'description' => $this->faker->text,
-                'author_id' => $author_1->id,
-                'price' => 50,
-                'year' => $this->faker->year,
+                'author_id'   => $author_1->id,
+                'price'       => 50,
+                'year'        => $this->faker->year,
             ],
             [
-                'title' => $this->faker->title,
+                'title'       => $this->faker->title,
                 'description' => null,
-                'author_id' => $author_1->id,
-                'price' => 150,
-                'year' => $this->faker->year,
+                'author_id'   => $author_1->id,
+                'price'       => 150,
+                'year'        => $this->faker->year,
             ],
             [
-                'title' => $this->faker->title,
+                'title'       => $this->faker->title,
                 'description' => null,
-                'author_id' => $author_1->id,
-                'price' => 250,
-                'year' => $this->faker->year,
+                'author_id'   => $author_1->id,
+                'price'       => 250,
+                'year'        => $this->faker->year,
             ],
         ]);
 
@@ -208,30 +209,30 @@ abstract class BaseWhereClauseTest extends BaseTest
     {
         $author_1 = Author::create([
             'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'email' => $this->faker->email,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
         ]);
         Book::insert([
             [
-                'title' => $this->faker->title,
+                'title'       => $this->faker->title,
                 'description' => $this->faker->text,
-                'author_id' => $author_1->id,
-                'price' => 50,
-                'year' => $this->faker->year,
+                'author_id'   => $author_1->id,
+                'price'       => 50,
+                'year'        => $this->faker->year,
             ],
             [
-                'title' => $this->faker->title,
+                'title'       => $this->faker->title,
                 'description' => null,
-                'author_id' => $author_1->id,
-                'price' => 150,
-                'year' => $this->faker->year,
+                'author_id'   => $author_1->id,
+                'price'       => 150,
+                'year'        => $this->faker->year,
             ],
             [
-                'title' => $this->faker->title,
+                'title'       => $this->faker->title,
                 'description' => null,
-                'author_id' => $author_1->id,
-                'price' => 250,
-                'year' => $this->faker->year,
+                'author_id'   => $author_1->id,
+                'price'       => 250,
+                'year'        => $this->faker->year,
             ],
         ]);
 
