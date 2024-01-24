@@ -1,5 +1,7 @@
 # Laravel Query Enrich
 
+[![unittests](https://github.com/SiavashBamshadnia/Laravel-Query-Enrich/actions/workflows/unittests.yml/badge.svg)](https://github.com/SiavashBamshadnia/Laravel-Query-Enrich/actions/workflows/unittests.yml)
+
 ## Introduction
 
 Laravel Query Enrich makes it easy to create complex database queries in Laravel without having to write complicated SQL
