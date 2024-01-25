@@ -3,9 +3,8 @@
 namespace sbamtr\LaravelQueryEnrich;
 
 use DateTime;
-use Illuminate\Contracts\Database\Query\Expression;
+use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
-use Illuminate\Database\Grammar;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Facades\DB;
 use ReflectionClass;
@@ -18,8 +17,12 @@ use sbamtr\LaravelQueryEnrich\Exception\DatabaseNotSupportedException;
  * includes methods for converting to SQL strings, configuring function behavior,
  * and escaping parameters for safe SQL execution.
  */
-abstract class DBFunction implements Expression
+abstract class DBFunction extends Expression
 {
+    public function __construct()
+    {
+    }
+
     /**
      * Indicates if the function result is a boolean value.
      *
@@ -247,11 +250,9 @@ abstract class DBFunction implements Expression
         return $this->toSql();
     }
 
-    public function getValue(Grammar $grammar)
+    public function getValue(...$parameters)
     {
-        $sql = $this->toSql();
-
-        return DB::raw($sql);
+        return $this->toSql();
     }
 
     /**

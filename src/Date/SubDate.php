@@ -12,20 +12,20 @@ use sbamtr\LaravelQueryEnrich\QE;
 class SubDate extends DBFunction
 {
     private mixed $subject;
-    private mixed $value;
+    private mixed $_value;
     private Unit $interval;
 
     public function __construct(mixed $subject, mixed $value, Unit $interval = Unit::DAY)
     {
         $this->subject = $subject;
-        $this->value = $value;
+        $this->_value = $value;
         $this->interval = $interval;
     }
 
     protected function getQuery(): string
     {
         $subject = $this->subject;
-        $value = $this->value;
+        $value = $this->_value;
         $interval = $this->interval;
 
         if ($this->getDatabaseEngine() == EDatabaseEngine::SQLite
@@ -52,7 +52,7 @@ class SubDate extends DBFunction
                 return "($subject - INTERVAL '$value $interval')";
             case EDatabaseEngine::SQLite:
             case EDatabaseEngine::SQLServer:
-                return QE::addDate($this->subject, -1 * $this->value, $this->interval);
+                return QE::addDate($this->subject, -1 * $this->_value, $this->interval);
         }
     }
 }

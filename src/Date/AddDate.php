@@ -12,20 +12,20 @@ use sbamtr\LaravelQueryEnrich\QE;
 class AddDate extends DBFunction
 {
     private mixed $subject;
-    private mixed $value;
+    private mixed $_value;
     private Unit $interval;
 
     public function __construct(mixed $subject, mixed $value, Unit $interval = Unit::DAY)
     {
         $this->subject = $subject;
-        $this->value = $value;
+        $this->_value = $value;
         $this->interval = $interval;
     }
 
     protected function getQuery(): string
     {
         $subject = $this->subject;
-        $value = $this->value;
+        $value = $this->_value;
         $interval = $this->interval;
 
         if ($this->getDatabaseEngine() == EDatabaseEngine::SQLite
@@ -57,7 +57,7 @@ class AddDate extends DBFunction
                     'convert',
                     [
                         QE::raw($this->getFunctionCallSql('datetime2', [0])),
-                        QE::raw($this->getFunctionCallSql('dateadd', [$this->interval, $this->value, $this->subject])),
+                        QE::raw($this->getFunctionCallSql('dateadd', [$this->interval, $this->_value, $this->subject])),
                     ]
                 );
         }
