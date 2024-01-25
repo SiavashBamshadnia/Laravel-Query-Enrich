@@ -42,7 +42,7 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
  * @method static Numeric\Ceil                          ceil($parameter)                                                                Returns the smallest integer value that is >= to a number.
  * @method static Numeric\Cos                           cos($parameter)                                                                 Returns the cosine of a number.
  * @method static Numeric\Cot                           cot($parameter)                                                                 Returns the cotangent of a number.
- * @method static Numeric\Count                         count($parameter)                                                               Returns the number of records returned by a select query.
+ * @method static Numeric\Count                         count($parameter = '*')                                                         Returns the number of records returned by a select query.
  * @method static Numeric\DegreesToRadian               degreesToRadian($parameter)                                                     Converts a degree value into radians.
  * @method static Numeric\Divide                        divide(...$parameters)                                                          Divide the first numeric parameter by subsequent numeric parameters.
  * @method static Numeric\Exp                           exp($parameter)                                                                 Returns e raised to the power of a specified number.

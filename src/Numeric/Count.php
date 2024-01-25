@@ -11,7 +11,7 @@ class Count extends DBFunction
 {
     private mixed $parameter;
 
-    public function __construct(mixed $parameter)
+    public function __construct(mixed $parameter = '*')
     {
         $this->parameter = $parameter;
     }
