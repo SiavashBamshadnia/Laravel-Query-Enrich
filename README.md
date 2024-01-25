@@ -15,8 +15,6 @@ SQL knowledge.
 
 You don't have to struggle with complicated SQL. Laravel Query Enrich makes your queries simpler.
 
-Certainly, here's the revised statement without using "when":
-
 ### Ensures Cross-Database Compatibility
 
 If you decide to switch the database engine, Laravel Query Enrich eliminates the need for manual code refactoring. It
