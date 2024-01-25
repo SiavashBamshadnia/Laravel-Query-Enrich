@@ -3,9 +3,9 @@
 namespace sbamtr\LaravelQueryEnrich;
 
 use DateTime;
-use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Facades\DB;
 use ReflectionClass;
 use sbamtr\LaravelQueryEnrich\Exception\DatabaseNotSupportedException;
