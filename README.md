@@ -1,7 +1,6 @@
 # Laravel Query Enrich
 
 [![unittests](https://github.com/SiavashBamshadnia/Laravel-Query-Enrich/actions/workflows/unittests.yml/badge.svg)](https://github.com/SiavashBamshadnia/Laravel-Query-Enrich/actions/workflows/unittests.yml)
-
 [![CodeFactor](https://www.codefactor.io/repository/github/siavashbamshadnia/laravel-query-enrich/badge)](https://www.codefactor.io/repository/github/siavashbamshadnia/laravel-query-enrich)
 
 _Supports Laravel 8, 9, 10_
