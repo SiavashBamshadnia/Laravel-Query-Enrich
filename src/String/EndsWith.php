@@ -25,6 +25,7 @@ class EndsWith extends DBFunction
     {
         $haystack = $this->escape($this->haystack);
         $needle = QE::concat(QE::raw(DB::escape('%')), $this->needle);
+
         return "$haystack like $needle";
     }
 }

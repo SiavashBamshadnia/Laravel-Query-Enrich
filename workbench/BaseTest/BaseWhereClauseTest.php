@@ -7,6 +7,7 @@ use sbamtr\LaravelQueryEnrich\Exception\InvalidArgumentException;
 use sbamtr\LaravelQueryEnrich\QE;
 use Workbench\App\Models\Author;
 use Workbench\App\Models\Book;
+
 use function sbamtr\LaravelQueryEnrich\c;
 
 abstract class BaseWhereClauseTest extends BaseTest
@@ -261,18 +262,18 @@ abstract class BaseWhereClauseTest extends BaseTest
         Author::insert([
             [
                 'first_name' => 'Walter',
-                'last_name' => 'White',
-                'email' => 'info@example.com',
+                'last_name'  => 'White',
+                'email'      => 'info@example.com',
             ],
             [
                 'first_name' => 'Walt',
-                'last_name' => 'White',
-                'email' => 'info2@example.com',
+                'last_name'  => 'White',
+                'email'      => 'info2@example.com',
             ],
             [
                 'first_name' => 'Skyler',
-                'last_name' => 'White',
-                'email' => 'info3@example.com',
+                'last_name'  => 'White',
+                'email'      => 'info3@example.com',
             ],
         ]);
 
@@ -285,24 +286,23 @@ abstract class BaseWhereClauseTest extends BaseTest
         self::assertEquals('Walt', $queryResult[1]->first_name);
     }
 
-
     public function testEndsWith()
     {
         Author::insert([
             [
                 'first_name' => 'Sandor',
-                'last_name' => 'Clegane',
-                'email' => 'info@example.com',
+                'last_name'  => 'Clegane',
+                'email'      => 'info@example.com',
             ],
             [
                 'first_name' => 'Gregor',
-                'last_name' => 'Clegane',
-                'email' => 'info2@example.com',
+                'last_name'  => 'Clegane',
+                'email'      => 'info2@example.com',
             ],
             [
                 'first_name' => 'Gared',
-                'last_name' => 'Clegane',
-                'email' => 'info3@example.com',
+                'last_name'  => 'Clegane',
+                'email'      => 'info3@example.com',
             ],
         ]);
 
@@ -320,18 +320,18 @@ abstract class BaseWhereClauseTest extends BaseTest
         Author::insert([
             [
                 'first_name' => 'Sandor',
-                'last_name' => 'Clegane',
-                'email' => 'info@example.com',
+                'last_name'  => 'Clegane',
+                'email'      => 'info@example.com',
             ],
             [
                 'first_name' => 'Gregor',
-                'last_name' => 'Clegane',
-                'email' => 'info2@example.com',
+                'last_name'  => 'Clegane',
+                'email'      => 'info2@example.com',
             ],
             [
                 'first_name' => 'Gared',
-                'last_name' => 'Clegane',
-                'email' => 'info3@example.com',
+                'last_name'  => 'Clegane',
+                'email'      => 'info3@example.com',
             ],
         ]);
 
