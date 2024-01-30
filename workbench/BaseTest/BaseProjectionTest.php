@@ -12,6 +12,7 @@ use sbamtr\LaravelQueryEnrich\Exception\InvalidArgumentException;
 use sbamtr\LaravelQueryEnrich\QE;
 use Workbench\App\Models\Author;
 use Workbench\App\Models\Book;
+
 use function sbamtr\LaravelQueryEnrich\c;
 
 abstract class BaseProjectionTest extends BaseTest
@@ -1498,7 +1499,7 @@ abstract class BaseProjectionTest extends BaseTest
     {
         $string = $this->faker->name;
 
-        $queryResult = DB::selectOne('select ' . QE::md5($string)->as('result'));
+        $queryResult = DB::selectOne('select '.QE::md5($string)->as('result'));
 
         $expected = md5($string);
 
@@ -1509,9 +1510,10 @@ abstract class BaseProjectionTest extends BaseTest
     {
         $string = 'Laravel Query Enrich';
 
-        $queryResult = DB::selectOne('select ' .
-            QE::startsWith($string, 'Laravel')->as('result_1') . ',' .
-            QE::startsWith($string, 'Laravel Query')->as('result_2') . ',' .
+        $queryResult = DB::selectOne(
+            'select '.
+            QE::startsWith($string, 'Laravel')->as('result_1').','.
+            QE::startsWith($string, 'Laravel Query')->as('result_2').','.
             QE::startsWith($string, 'Query')->as('result_3')
         );
 
@@ -1524,9 +1526,10 @@ abstract class BaseProjectionTest extends BaseTest
     {
         $string = 'Laravel Query Enrich';
 
-        $queryResult = DB::selectOne('select ' .
-            QE::endsWith($string, 'Enrich')->as('result_1') . ',' .
-            QE::endsWith($string, 'Query Enrich')->as('result_2') . ',' .
+        $queryResult = DB::selectOne(
+            'select '.
+            QE::endsWith($string, 'Enrich')->as('result_1').','.
+            QE::endsWith($string, 'Query Enrich')->as('result_2').','.
             QE::endsWith($string, 'Query')->as('result_3')
         );
 
@@ -1539,11 +1542,12 @@ abstract class BaseProjectionTest extends BaseTest
     {
         $string = 'Laravel Query Enrich';
 
-        $queryResult = DB::selectOne('select ' .
-            QE::contains($string, 'Laravel Query Enrich')->as('result_1') . ',' .
-            QE::contains($string, 'Query Enrich')->as('result_2') . ',' .
-            QE::contains($string, 'Laravel Query')->as('result_3') . ',' .
-            QE::contains($string, 'Query')->as('result_4') . ',' .
+        $queryResult = DB::selectOne(
+            'select '.
+            QE::contains($string, 'Laravel Query Enrich')->as('result_1').','.
+            QE::contains($string, 'Query Enrich')->as('result_2').','.
+            QE::contains($string, 'Laravel Query')->as('result_3').','.
+            QE::contains($string, 'Query')->as('result_4').','.
             QE::contains($string, 'Lumen')->as('result_5')
         );
 

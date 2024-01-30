@@ -25,6 +25,7 @@ class StartsWith extends DBFunction
     {
         $haystack = $this->escape($this->haystack);
         $needle = QE::concat($this->needle, QE::raw(DB::escape('%')));
+
         return "$haystack like $needle";
     }
 }
