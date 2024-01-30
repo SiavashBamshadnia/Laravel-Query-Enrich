@@ -12,7 +12,6 @@ use sbamtr\LaravelQueryEnrich\Exception\InvalidArgumentException;
 use sbamtr\LaravelQueryEnrich\QE;
 use Workbench\App\Models\Author;
 use Workbench\App\Models\Book;
-
 use function sbamtr\LaravelQueryEnrich\c;
 
 abstract class BaseProjectionTest extends BaseTest
@@ -1112,7 +1111,7 @@ abstract class BaseProjectionTest extends BaseTest
 
     public function testTan()
     {
-        $number = $this->faker->randomFloat();
+        $number = $this->faker->randomFloat(2, 1, 10);
 
         $queryResult = DB::selectOne(
             'select '.QE::tan($number)->as('result')
