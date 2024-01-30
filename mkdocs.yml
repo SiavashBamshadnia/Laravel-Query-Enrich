@@ -78,6 +78,8 @@ nav:
       - String:
           - concat: QE/String/concat.md
           - concatWS: QE/String/concatWS.md
+          - contains: QE/String/contains.md
+          - endsWith: QE/String/endsWith.md
           - left: QE/String/left.md
           - length: QE/String/length.md
           - lower: QE/String/lower.md
@@ -91,6 +93,7 @@ nav:
           - right: QE/String/right.md
           - rtrim: QE/String/rtrim.md
           - space: QE/String/space.md
+          - startsWith: QE/String/startsWith.md
           - substr: QE/String/substr.md
           - trim: QE/String/trim.md
           - upper: QE/String/upper.md
