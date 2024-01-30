@@ -3,7 +3,7 @@
 [![Latest Stable Version](http://poser.pugx.org/sbamtr/laravel-query-enrich/v)](https://packagist.org/packages/sbamtr/laravel-query-enrich)
 [![unittests](https://github.com/SiavashBamshadnia/Laravel-Query-Enrich/actions/workflows/unittests.yml/badge.svg)](https://github.com/SiavashBamshadnia/Laravel-Query-Enrich/actions/workflows/unittests.yml)
 [![CodeFactor](https://www.codefactor.io/repository/github/siavashbamshadnia/laravel-query-enrich/badge)](https://www.codefactor.io/repository/github/siavashbamshadnia/laravel-query-enrich)
-[![License](http://poser.pugx.org/sbamtr/laravel-query-enrich/license)](https://packagist.org/packages/sbamtr/laravel-query-enrich)
+[![License](http://poser.pugx.org/sbamtr/laravel-query-enrich/license)](https://github.com/SiavashBamshadnia/Laravel-Query-Enrich/blob/main/LICENSE)
 
 _Supports Laravel 8, 9, 10_
 
