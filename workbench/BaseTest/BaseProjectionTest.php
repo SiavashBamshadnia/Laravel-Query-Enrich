@@ -12,6 +12,7 @@ use sbamtr\LaravelQueryEnrich\Exception\InvalidArgumentException;
 use sbamtr\LaravelQueryEnrich\QE;
 use Workbench\App\Models\Author;
 use Workbench\App\Models\Book;
+
 use function sbamtr\LaravelQueryEnrich\c;
 
 abstract class BaseProjectionTest extends BaseTest
