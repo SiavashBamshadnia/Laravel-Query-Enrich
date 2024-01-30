@@ -12,7 +12,6 @@ use sbamtr\LaravelQueryEnrich\Exception\InvalidArgumentException;
 use sbamtr\LaravelQueryEnrich\QE;
 use Workbench\App\Models\Author;
 use Workbench\App\Models\Book;
-
 use function sbamtr\LaravelQueryEnrich\c;
 
 abstract class BaseProjectionTest extends BaseTest
@@ -1493,5 +1492,65 @@ abstract class BaseProjectionTest extends BaseTest
 
         self::assertEquals(1, $queryResult->result_1);
         self::assertEquals(0, $queryResult->result_2);
+    }
+
+    public function testMd5()
+    {
+        $string = $this->faker->name;
+
+        $queryResult = DB::selectOne('select ' . QE::md5($string)->as('result'));
+
+        $expected = md5($string);
+
+        self::assertEquals($expected, $queryResult->result);
+    }
+
+    public function testStartsWith()
+    {
+        $string = 'Laravel Query Enrich';
+
+        $queryResult = DB::selectOne('select ' .
+            QE::startsWith($string, 'Laravel')->as('result_1') . ',' .
+            QE::startsWith($string, 'Laravel Query')->as('result_2') . ',' .
+            QE::startsWith($string, 'Query')->as('result_3')
+        );
+
+        self::assertEquals(1, $queryResult->result_1);
+        self::assertEquals(1, $queryResult->result_2);
+        self::assertEquals(0, $queryResult->result_3);
+    }
+
+    public function testEndsWith()
+    {
+        $string = 'Laravel Query Enrich';
+
+        $queryResult = DB::selectOne('select ' .
+            QE::endsWith($string, 'Enrich')->as('result_1') . ',' .
+            QE::endsWith($string, 'Query Enrich')->as('result_2') . ',' .
+            QE::endsWith($string, 'Query')->as('result_3')
+        );
+
+        self::assertEquals(1, $queryResult->result_1);
+        self::assertEquals(1, $queryResult->result_2);
+        self::assertEquals(0, $queryResult->result_3);
+    }
+
+    public function testContains()
+    {
+        $string = 'Laravel Query Enrich';
+
+        $queryResult = DB::selectOne('select ' .
+            QE::contains($string, 'Laravel Query Enrich')->as('result_1') . ',' .
+            QE::contains($string, 'Query Enrich')->as('result_2') . ',' .
+            QE::contains($string, 'Laravel Query')->as('result_3') . ',' .
+            QE::contains($string, 'Query')->as('result_4') . ',' .
+            QE::contains($string, 'Lumen')->as('result_5')
+        );
+
+        self::assertEquals(1, $queryResult->result_1);
+        self::assertEquals(1, $queryResult->result_2);
+        self::assertEquals(1, $queryResult->result_3);
+        self::assertEquals(1, $queryResult->result_4);
+        self::assertEquals(0, $queryResult->result_5);
     }
 }

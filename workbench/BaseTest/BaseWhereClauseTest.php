@@ -7,7 +7,6 @@ use sbamtr\LaravelQueryEnrich\Exception\InvalidArgumentException;
 use sbamtr\LaravelQueryEnrich\QE;
 use Workbench\App\Models\Author;
 use Workbench\App\Models\Book;
-
 use function sbamtr\LaravelQueryEnrich\c;
 
 abstract class BaseWhereClauseTest extends BaseTest
@@ -16,7 +15,7 @@ abstract class BaseWhereClauseTest extends BaseTest
     {
         $expected = Book::where('year', '>', 2000)->toRawSql();
         $actual = Book::whereRaw(
-            QE::condition(c('year'), '>', 2000)->toSql()
+            QE::condition(c('year'), '>', 2000)
         )->toRawSql();
 
         self::assertEquals($expected, $actual);
@@ -58,7 +57,7 @@ abstract class BaseWhereClauseTest extends BaseTest
         )->whereRaw(
             QE::exists(
                 Db::table('authors')->where('authors.id', c('books.author_id'))
-            )->toSql()
+            )
         )->get();
 
         self::assertEquals(1, count($queryResult));
@@ -94,7 +93,7 @@ abstract class BaseWhereClauseTest extends BaseTest
         ]);
 
         $queryResult = DB::table('books')->whereRaw(
-            QE::isNull(c('description'))->toSql()
+            QE::isNull(c('description'))
         )->count();
 
         $actual_1 = $queryResult;
@@ -138,7 +137,7 @@ abstract class BaseWhereClauseTest extends BaseTest
             QE::and(
                 QE::condition(c('price'), '>', 100),
                 QE::condition(c('price'), '<', 200),
-            )->toSql()
+            )
         )->get();
 
         $actual_1 = count($queryResult);
@@ -187,7 +186,7 @@ abstract class BaseWhereClauseTest extends BaseTest
             QE::or(
                 QE::condition(c('price'), 150),
                 QE::condition(c('price'), 250),
-            )->toSql()
+            )
         )->get();
 
         $actual_1 = count($queryResult);
@@ -239,7 +238,7 @@ abstract class BaseWhereClauseTest extends BaseTest
         $queryResult = DB::table('books')->whereRaw(
             QE::not(
                 QE::condition(c('price'), 150),
-            )->toSql()
+            )
         )->get();
 
         $actual_1 = count($queryResult);
@@ -255,5 +254,93 @@ abstract class BaseWhereClauseTest extends BaseTest
 
         self::assertEquals($expected_2, $actual_2);
         self::assertEquals($expected_3, $actual_3);
+    }
+
+    public function testStartsWith()
+    {
+        Author::insert([
+            [
+                'first_name' => 'Walter',
+                'last_name' => 'White',
+                'email' => 'info@example.com',
+            ],
+            [
+                'first_name' => 'Walt',
+                'last_name' => 'White',
+                'email' => 'info2@example.com',
+            ],
+            [
+                'first_name' => 'Skyler',
+                'last_name' => 'White',
+                'email' => 'info3@example.com',
+            ],
+        ]);
+
+        $queryResult = DB::table('authors')->whereRaw(
+            QE::startsWith(c('first_name'), 'Walt')
+        )->get();
+
+        self::assertEquals(2, count($queryResult));
+        self::assertEquals('Walter', $queryResult[0]->first_name);
+        self::assertEquals('Walt', $queryResult[1]->first_name);
+    }
+
+
+    public function testEndsWith()
+    {
+        Author::insert([
+            [
+                'first_name' => 'Sandor',
+                'last_name' => 'Clegane',
+                'email' => 'info@example.com',
+            ],
+            [
+                'first_name' => 'Gregor',
+                'last_name' => 'Clegane',
+                'email' => 'info2@example.com',
+            ],
+            [
+                'first_name' => 'Gared',
+                'last_name' => 'Clegane',
+                'email' => 'info3@example.com',
+            ],
+        ]);
+
+        $queryResult = DB::table('authors')->whereRaw(
+            QE::endsWith(c('first_name'), 'or')
+        )->get();
+
+        self::assertEquals(2, count($queryResult));
+        self::assertEquals('Sandor', $queryResult[0]->first_name);
+        self::assertEquals('Gregor', $queryResult[1]->first_name);
+    }
+
+    public function testContains()
+    {
+        Author::insert([
+            [
+                'first_name' => 'Sandor',
+                'last_name' => 'Clegane',
+                'email' => 'info@example.com',
+            ],
+            [
+                'first_name' => 'Gregor',
+                'last_name' => 'Clegane',
+                'email' => 'info2@example.com',
+            ],
+            [
+                'first_name' => 'Gared',
+                'last_name' => 'Clegane',
+                'email' => 'info3@example.com',
+            ],
+        ]);
+
+        $queryResult = DB::table('authors')->whereRaw(
+            QE::contains(c('first_name'), 'o')
+        )->get();
+
+        self::assertEquals(2, count($queryResult));
+        self::assertEquals('Sandor', $queryResult[0]->first_name);
+        self::assertEquals('Gregor', $queryResult[1]->first_name);
     }
 }

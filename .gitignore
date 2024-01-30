@@ -25,3 +25,4 @@ Homestead.json
 
 /.idea/
 /.phpunit.cache/
+/clover.xml
