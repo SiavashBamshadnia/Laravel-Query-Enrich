@@ -97,6 +97,8 @@ Manipulating text has never been simpler.
 - **[`concat(...$parameters)`](String/concat.md):** Adds two or more expressions together.
 - **[`concatWS($separator, ...$parameters)`](String/concatWS.md):** Adds two or more expressions together with a
   separator.
+- **[`contains($haystack, $needle)`](String/contains.md):**  Determines if a given string contains a given substring.
+- **[`endsWith($haystack, $needle)`](String/endsWith.md):**  Determines if a given string ends with a given substring.
 - **[`left($string, $numberOfChars)`](String/left.md):** Extracts a number of characters from a string (starting from
   left).
 - **[`length($parameter)`](String/length.md):** Returns the length of a string.
@@ -115,6 +117,7 @@ Manipulating text has never been simpler.
   right).
 - **[`rtrim($parameter)`](String/rtrim.md):** Removes trailing spaces from a string.
 - **[`space($parameter)`](String/space.md):** Returns a string consisting of a specified number of spaces.
+- **[`startsWith($haystack, $needle)`](String/startsWith.md):**  Determines if a given string starts with a given substring.
 - **[`substr($string, $start, $length = null)`](String/substr.md):** Extracts a substring from a string starting at a
   specified position with optional length.
 - **[`trim($parameter)`](String/trim.md):** Removes leading and trailing spaces from a string.
