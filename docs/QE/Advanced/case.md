@@ -1,4 +1,4 @@
-# Case
+# case
 
 The case expression is a powerful tool that allows you to handle multiple conditions in your code, similar to an
 if-then-else statement in standard programming languages.

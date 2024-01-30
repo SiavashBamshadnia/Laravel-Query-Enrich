@@ -14,6 +14,15 @@ use function sbamtr\LaravelQueryEnrich\c;
 $books = Book::select(
     'id',
     'name',
-    QE::isNull(c('description'))->as('is_null')
+    QE::isNull(c('description'))->as('is_description_null')
+)->get();
+```
+
+```php
+use sbamtr\LaravelQueryEnrich\QE;
+use function sbamtr\LaravelQueryEnrich\c;
+
+$books = DB::table('books')->whereRaw(
+    QE::isNull(c('description'))
 )->get();
 ```

@@ -24,3 +24,14 @@ $queryResult = Author::select(
     )->as('has_book')
 )->get();
 ```
+
+```php
+$suppliers = DB::table('suppliers')->select(
+    'id',
+    'name',
+)->whereRaw(
+    QE::exists(
+        Db::table('products')->where('products.supplier_id', c('suppliers.id'))->where('price', '<', 25)
+    )
+)->toSql();
+```
