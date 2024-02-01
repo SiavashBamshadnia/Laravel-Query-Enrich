@@ -12,7 +12,6 @@ use sbamtr\LaravelQueryEnrich\Exception\InvalidArgumentException;
 use sbamtr\LaravelQueryEnrich\QE;
 use Workbench\App\Models\Author;
 use Workbench\App\Models\Book;
-
 use function sbamtr\LaravelQueryEnrich\c;
 
 abstract class BaseProjectionTest extends BaseTest
@@ -687,6 +686,54 @@ abstract class BaseProjectionTest extends BaseTest
 
         $actual_2 = $books[1]->result;
         $expected_2 = Book::where('author_id', 2)->count('author_id');
+
+        self::assertEquals($expected_2, $actual_2);
+    }
+
+    public function testCountWithoutParameter()
+    {
+        $author_1 = Author::create([
+            'first_name' => $this->faker->firstName,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
+        ]);
+        $author_2 = Author::create([
+            'first_name' => $this->faker->firstName,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
+        ]);
+        $count = $this->faker->numberBetween(2, 100);
+        $booksToInsert = [];
+        for ($i = 0; $i < $count; $i++) {
+            $booksToInsert[] = [
+                'title'       => $this->faker->title,
+                'description' => $this->faker->text,
+                'price'       => 100,
+                'year'        => $this->faker->year,
+            ];
+            if ($i % 2 == 0) {
+                $booksToInsert[$i]['author_id'] = $author_1->id;
+            } else {
+                $booksToInsert[$i]['author_id'] = $author_2->id;
+            }
+        }
+        Book::insert($booksToInsert);
+
+        $books = Book::select(
+            QE::count()->as('result')
+        )->groupBy(
+            'author_id'
+        )->orderBy(
+            'author_id'
+        )->get();
+
+        $actual_1 = $books[0]->result;
+        $expected_1 = Book::where('author_id', 1)->count();
+
+        self::assertEquals($expected_1, $actual_1);
+
+        $actual_2 = $books[1]->result;
+        $expected_2 = Book::where('author_id', 2)->count();
 
         self::assertEquals($expected_2, $actual_2);
     }

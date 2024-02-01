@@ -3,6 +3,7 @@
 namespace sbamtr\LaravelQueryEnrich\Numeric;
 
 use sbamtr\LaravelQueryEnrich\DBFunction;
+use sbamtr\LaravelQueryEnrich\QE;
 
 /**
  * Returns the number of records returned by a select query.
@@ -13,7 +14,11 @@ class Count extends DBFunction
 
     public function __construct(mixed $parameter = '*')
     {
-        $this->parameter = $parameter;
+        if ($parameter === '*') {
+            $this->parameter = QE::raw('*');
+        } else {
+            $this->parameter = $parameter;
+        }
     }
 
     protected function getQuery(): string

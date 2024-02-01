@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use sbamtr\LaravelQueryEnrich\QE;
 use Workbench\App\Models\Author;
+use function sbamtr\LaravelQueryEnrich\c;
 
 abstract class BaseBasicFunctionsTest extends BaseTest
 {
@@ -18,7 +19,7 @@ abstract class BaseBasicFunctionsTest extends BaseTest
         ]);
 
         $queryResult = Author::whereRaw(
-            QE::condition('first_name', 'like', '%%')->toSql()
+            QE::condition(c('first_name'), 'like', '%%')
         )->count();
 
         self::assertEquals(0, $queryResult);
