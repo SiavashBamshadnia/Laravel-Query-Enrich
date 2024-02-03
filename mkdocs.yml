@@ -100,3 +100,8 @@ nav:
 
 markdown_extensions:
   - admonition
+
+extra:
+  analytics:
+    provider: google
+    property: G-G8VBWZGB0T
