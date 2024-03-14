@@ -127,6 +127,7 @@ abstract class DBFunction extends Expression
         $driver = config('database.connections')[config('database.default')]['driver'];
         switch ($driver) {
             case 'mysql':
+            case 'mariadb':
                 return EDatabaseEngine::MySQL;
             case 'pgsql':
                 return EDatabaseEngine::PostgreSQL;

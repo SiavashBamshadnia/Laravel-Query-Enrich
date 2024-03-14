@@ -6,7 +6,6 @@ use Illuminate\Contracts\Config\Repository;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\DB;
 use Orchestra\Testbench\TestCase;
-
 use function Orchestra\Testbench\workbench_path;
 
 abstract class BaseTest extends TestCase
@@ -36,6 +35,13 @@ abstract class BaseTest extends TestCase
             ]);
             $config->set('database.connections.mysql', [
                 'driver'   => 'mysql',
+                'host'     => '127.0.0.1',
+                'database' => 'test',
+                'username' => 'root',
+                'password' => 'mysql',
+            ]);
+			$config->set('database.connections.mariadb', [
+                'driver'   => 'mariadb',
                 'host'     => '127.0.0.1',
                 'database' => 'test',
                 'username' => 'root',
