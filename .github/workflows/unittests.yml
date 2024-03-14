@@ -47,7 +47,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-          extensions: mbstring, dom, fileinfo, pdo_sqlite, pdo_mysql, pdo_sqlsrv
+          extensions: mbstring, dom, fileinfo, pdo_sqlite, pdo_mysql, pdo_sqlsrv, pdo_mariadb
           coverage: xdebug
 
       - name: Install Dependencies
