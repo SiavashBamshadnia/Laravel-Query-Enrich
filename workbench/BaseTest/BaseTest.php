@@ -61,6 +61,7 @@ abstract class BaseTest extends TestCase
                 'database' => 'tempdb',
                 'username' => 'sa',
                 'password' => 'yourStrong(!)Password',
+                'trust_server_certificate' => true,
             ]);
 
             $config->set('database.default', $this->getDatabaseEngine());
