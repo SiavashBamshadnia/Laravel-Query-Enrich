@@ -18,7 +18,7 @@ class Condition extends DBFunction
      *
      * @var array
      */
-    private const VALID_OPERATORS = ['=', '<>', '!=', 'like', 'not like', '<', '>', '<=', '>=', 'is', 'in', 'not in'];
+    private const VALID_OPERATORS = ['=', '<>', '!=', 'like', 'not like', '<', '>', '<=', '>=', 'is', 'is not', 'in', 'not in'];
 
     /**
      * Operators that accept arrays as parameters.
