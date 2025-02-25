@@ -56,11 +56,11 @@ abstract class BaseTest extends TestCase
                 'password' => 'my_password',
             ]);
             $config->set('database.connections.sqlsrv', [
-                'driver'   => 'sqlsrv',
-                'host'     => '127.0.0.1',
-                'database' => 'tempdb',
-                'username' => 'sa',
-                'password' => 'yourStrong(!)Password',
+                'driver'                   => 'sqlsrv',
+                'host'                     => '127.0.0.1',
+                'database'                 => 'tempdb',
+                'username'                 => 'sa',
+                'password'                 => 'yourStrong(!)Password',
                 'trust_server_certificate' => true,
             ]);
 

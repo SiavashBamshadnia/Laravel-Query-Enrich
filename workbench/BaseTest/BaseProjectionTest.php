@@ -202,7 +202,8 @@ abstract class BaseProjectionTest extends BaseTest
 
     public function testCondition()
     {
-        $queryResult = DB::selectOne('select '.
+        $queryResult = DB::selectOne(
+            'select '.
             QE::condition(1, 1)->as('equal').','.
             QE::condition(1, '=', 1)->as('equal_2').','.
             QE::condition(2, '>', 1)->as('greater').','.
