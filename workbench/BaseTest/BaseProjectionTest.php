@@ -202,7 +202,8 @@ abstract class BaseProjectionTest extends BaseTest
 
     public function testCondition()
     {
-        $queryResult = DB::selectOne('select '.
+        $queryResult = DB::selectOne(
+            'select '.
             QE::condition(1, 1)->as('equal').','.
             QE::condition(1, '=', 1)->as('equal_2').','.
             QE::condition(2, '>', 1)->as('greater').','.
@@ -216,7 +217,9 @@ abstract class BaseProjectionTest extends BaseTest
             QE::condition(1, '!=', 2)->as('not_equal_2').','.
             QE::condition('a', 'not like', 'b')->as('not_like').','.
             QE::condition('b', 'in', ['a', 'b', 'c', 'd'])->as('in').','.
-            QE::condition('e', 'not in', ['a', 'b', 'c', 'd'])->as('not_in'));
+            QE::condition('e', 'not in', ['a', 'b', 'c', 'd'])->as('not_in').','.
+            QE::condition(1, 'is not', null)->as('is_not')
+        );
 
         self::assertEquals(1, $queryResult->equal_2);
         self::assertEquals(1, $queryResult->equal);
@@ -232,6 +235,7 @@ abstract class BaseProjectionTest extends BaseTest
         self::assertEquals(1, $queryResult->not_like);
         self::assertEquals(1, $queryResult->in);
         self::assertEquals(1, $queryResult->not_in);
+        self::assertEquals(1, $queryResult->is_not);
     }
 
     public function testAddDate()
