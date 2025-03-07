@@ -5,7 +5,7 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/siavashbamshadnia/laravel-query-enrich/badge)](https://www.codefactor.io/repository/github/siavashbamshadnia/laravel-query-enrich)
 [![License](http://poser.pugx.org/sbamtr/laravel-query-enrich/license)](https://github.com/SiavashBamshadnia/Laravel-Query-Enrich/blob/main/LICENSE)
 
-_Supports Laravel 8, 9, 10, 11_
+_Supports Laravel 8, 9, 10, 11, 12_
 
 ## Introduction
 

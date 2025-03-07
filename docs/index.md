@@ -1,6 +1,6 @@
 # Introduction
 
-_Supports Laravel 8, 9, 10, 11_
+_Supports Laravel 8, 9, 10, 11, 12_
 
 Laravel Query Enrich makes it easy to create complex database queries in Laravel without having to write complicated SQL
 code. It simplifies the way developers interact with databases, making it more straightforward to build and read queries
