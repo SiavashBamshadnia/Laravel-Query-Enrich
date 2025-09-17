@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Facades\DB;
-use ReflectionClass;
 use sbamtr\LaravelQueryEnrich\Exception\DatabaseNotSupportedException;
 
 /**
@@ -33,9 +32,9 @@ abstract class DBFunction extends Expression
     /**
      * The alias to use for the function in an SQL query.
      *
-     * @var string|null
+     * @var string
      */
-    protected string|null $alias = null;
+    protected ?string $alias = null;
 
     /**
      * An array to keep track of SQLite configured functions.
@@ -163,9 +162,8 @@ abstract class DBFunction extends Expression
         }
         if (is_array($parameter)) {
             $queryGrammar = DB::connection()->getQueryGrammar();
-            $count = count($parameter);
-            for ($i = 0; $i < $count; $i++) {
-                $parameter[$i] = $queryGrammar->escape($parameter[$i]);
+            foreach ($parameter as &$value) {
+                $value = $queryGrammar->escape(enum_value($value));
             }
 
             return $parameter;
@@ -191,10 +189,7 @@ abstract class DBFunction extends Expression
         }
 
         if (is_object($parameter)) {
-            $reflection = new ReflectionClass($parameter::class);
-            if ($reflection->isEnum()) {
-                return strtolower($parameter->value);
-            }
+            $parameter = enum_value($parameter);
         }
         if (is_string($parameter)) {
             $parameter = addcslashes($parameter, '%');
@@ -264,7 +259,7 @@ abstract class DBFunction extends Expression
      *
      * @return string
      */
-    public function getFunctionCallSql(string $function, array $parameters = null): string
+    public function getFunctionCallSql(string $function, ?array $parameters = null): string
     {
         if ($parameters === null) {
             return "$function()";

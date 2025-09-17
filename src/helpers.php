@@ -13,3 +13,20 @@ function c(string $name): Column
 {
     return new Column($name);
 }
+
+/**
+ * @template TValue
+ *
+ * @param TValue $value
+ *
+ * @return ($value is \BackedEnum ? int|string : ($value is \UnitEnum ? string : TValue))
+ */
+function enum_value($value)
+{
+    return match (true) {
+        $value instanceof \BackedEnum => $value->value,
+        $value instanceof \UnitEnum   => $value->name,
+
+        default => $value,
+    };
+}
