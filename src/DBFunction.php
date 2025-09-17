@@ -169,22 +169,18 @@ abstract class DBFunction extends Expression
             return $parameter;
         }
 
-        if ($parameter instanceof DateTime
-            ||
-            (
-                is_string($parameter)
-                &&
-                $datetime = DateTime::createFromFormat('Y-m-d H:i:s', $parameter)
-            )
-        ) {
-            if (isset($datetime)) {
-                $parameter = $datetime;
-            }
-            $parameter = $parameter->format('Y-m-d H:i:s');
-            if ($this->getDatabaseEngine() == EDatabaseEngine::PostgreSQL) {
-                $parameter = DB::escape($parameter);
+        if ($parameter instanceof DateTime || is_string($parameter)) {
+            $datetime = is_string($parameter)
+                ? DateTime::createFromFormat('Y-m-d H:i:s', $parameter)
+                : $parameter;
 
-                return "timestamp $parameter";
+            if ($datetime) {
+                $parameter = $datetime->format('Y-m-d H:i:s');
+                if ($this->getDatabaseEngine() == EDatabaseEngine::PostgreSQL) {
+                    $parameter = DB::escape($parameter);
+
+                    return "timestamp {$parameter}";
+                }
             }
         }
 
