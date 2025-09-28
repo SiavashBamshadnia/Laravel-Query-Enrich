@@ -13,13 +13,6 @@ abstract class BaseTest extends TestCase
 {
     use WithFaker;
 
-    public function __construct(string $name)
-    {
-        parent::__construct($name);
-
-        $this->setUpFaker();
-    }
-
     protected function getPackageProviders($app)
     {
         return ['sbamtr\\LaravelQueryEnrich\\QueryEnrichServiceProvider'];

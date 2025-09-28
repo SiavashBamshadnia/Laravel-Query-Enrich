@@ -59,15 +59,15 @@ abstract class BaseProjectionTest extends BaseTest
 
     public function testCaseWhen()
     {
-        $author = Author::create([
+        $author = Author::query()->create([
             'first_name' => $this->faker->firstName,
             'last_name'  => $this->faker->lastName,
             'email'      => $this->faker->email,
         ]);
-        Book::insert([
+        Book::query()->insert([
             [
                 'title'       => $this->faker->title,
-                'description' => $this->faker->text,
+                'description' => null,
                 'author_id'   => $author->id,
                 'price'       => 150,
                 'year'        => $this->faker->year,
@@ -88,17 +88,30 @@ abstract class BaseProjectionTest extends BaseTest
             ],
         ]);
 
-        $books = Book::select(
-            QE::case()
-                ->when(c('price'), '>', 100)->then('expensive')
-                ->when(QE::condition(50, '<', c('price')), QE::condition(c('price'), '<=', 100))->then('moderate')
-                ->else('affordable')
-                ->as('price_category')
-        )->get();
+        $books = Book::query()
+            ->select(
+                QE::case()
+                    ->when(c('price'), '>', 100)->then('expensive')
+                    ->when(
+                        QE::condition(50, '<', c('price')),
+                        QE::condition(c('price'), '<=', 100)
+                    )->then('moderate')
+                    ->else('affordable')
+                ->as('price_category'),
+                QE::case()
+                    ->when(QE::isNull(c('description')))->then('without_description')
+                    ->else('with_description')
+                ->as('described')
+            )
+            ->get();
 
         self::assertEquals('expensive', $books[0]->price_category);
         self::assertEquals('moderate', $books[1]->price_category);
         self::assertEquals('affordable', $books[2]->price_category);
+
+        self::assertEquals('without_description', $books[0]->described);
+        self::assertEquals('with_description', $books[1]->described);
+        self::assertEquals('with_description', $books[2]->described);
     }
 
     public function testCaseWhenInvalidArgumentException()

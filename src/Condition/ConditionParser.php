@@ -2,6 +2,7 @@
 
 namespace sbamtr\LaravelQueryEnrich\Condition;
 
+use sbamtr\LaravelQueryEnrich\Advanced\IsNull;
 use sbamtr\LaravelQueryEnrich\Exception\InvalidArgumentException;
 use sbamtr\LaravelQueryEnrich\Raw;
 
@@ -14,21 +15,26 @@ class ConditionParser
     /**
      * Parses an array of conditions.
      *
-     * @param array $conditions An array of conditions.
+     * @param non-empty-array $conditions An array of conditions.
      *
      * @throws InvalidArgumentException If the input is invalid.
      *
      * @return Condition|ConditionChain|Raw Depending on the input, this method returns an instance of Condition, ConditionChain, or Raw.
      */
-    public static function parse(array $conditions): Condition|ConditionChain|Raw
+    public static function parse(array $conditions): Condition|ConditionChain|IsNull|Raw
     {
-        if ($conditions[0] instanceof Raw and count($conditions) === 1) {
-            return $conditions[0];
+        $count = count($conditions);
+        $condition = reset($conditions);
+
+        if ($count === 1 && $condition instanceof Raw || $condition instanceof IsNull) {
+            return $condition;
         }
-        if ($conditions[0] instanceof Condition) {
+
+        if ($condition instanceof Condition) {
             return new ConditionChain($conditions);
         }
-        if (count($conditions) === 2 || count($conditions) === 3) {
+
+        if ($count === 2 || $count === 3) {
             return new Condition(...$conditions);
         }
 
