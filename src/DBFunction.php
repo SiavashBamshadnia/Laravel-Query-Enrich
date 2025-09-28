@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Facades\DB;
-use ReflectionClass;
 use sbamtr\LaravelQueryEnrich\Exception\DatabaseNotSupportedException;
 
 /**
@@ -33,9 +32,9 @@ abstract class DBFunction extends Expression
     /**
      * The alias to use for the function in an SQL query.
      *
-     * @var string|null
+     * @var string
      */
-    protected string|null $alias = null;
+    protected ?string $alias = null;
 
     /**
      * An array to keep track of SQLite configured functions.
@@ -163,38 +162,30 @@ abstract class DBFunction extends Expression
         }
         if (is_array($parameter)) {
             $queryGrammar = DB::connection()->getQueryGrammar();
-            $count = count($parameter);
-            for ($i = 0; $i < $count; $i++) {
-                $parameter[$i] = $queryGrammar->escape($parameter[$i]);
+            foreach ($parameter as &$value) {
+                $value = $queryGrammar->escape(enum_value($value));
             }
 
             return $parameter;
         }
 
-        if ($parameter instanceof DateTime
-            ||
-            (
-                is_string($parameter)
-                &&
-                $datetime = DateTime::createFromFormat('Y-m-d H:i:s', $parameter)
-            )
-        ) {
-            if (isset($datetime)) {
-                $parameter = $datetime;
-            }
-            $parameter = $parameter->format('Y-m-d H:i:s');
-            if ($this->getDatabaseEngine() == EDatabaseEngine::PostgreSQL) {
-                $parameter = DB::escape($parameter);
+        if ($parameter instanceof DateTime || is_string($parameter)) {
+            $datetime = is_string($parameter)
+                ? DateTime::createFromFormat('Y-m-d H:i:s', $parameter)
+                : $parameter;
 
-                return "timestamp $parameter";
+            if ($datetime) {
+                $parameter = $datetime->format('Y-m-d H:i:s');
+                if ($this->getDatabaseEngine() == EDatabaseEngine::PostgreSQL) {
+                    $parameter = DB::escape($parameter);
+
+                    return "timestamp {$parameter}";
+                }
             }
         }
 
         if (is_object($parameter)) {
-            $reflection = new ReflectionClass($parameter::class);
-            if ($reflection->isEnum()) {
-                return strtolower($parameter->value);
-            }
+            $parameter = enum_value($parameter);
         }
         if (is_string($parameter)) {
             $parameter = addcslashes($parameter, '%');
@@ -264,7 +255,7 @@ abstract class DBFunction extends Expression
      *
      * @return string
      */
-    public function getFunctionCallSql(string $function, array $parameters = null): string
+    public function getFunctionCallSql(string $function, ?array $parameters = null): string
     {
         if ($parameters === null) {
             return "$function()";

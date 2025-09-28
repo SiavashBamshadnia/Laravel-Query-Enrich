@@ -6,6 +6,8 @@ use sbamtr\LaravelQueryEnrich\DBFunction;
 use sbamtr\LaravelQueryEnrich\EDatabaseEngine;
 use sbamtr\LaravelQueryEnrich\QE;
 
+use function sbamtr\LaravelQueryEnrich\enum_value;
+
 /**
  * Adds a specific value to a date/datetime.
  */
@@ -43,21 +45,21 @@ class AddDate extends DBFunction
 
         $subject = $this->escape($subject);
         $value = $this->escape($value);
-        $interval = $this->escape($interval);
+        $escapedInterval = enum_value($interval);
 
         switch ($this->getDatabaseEngine()) {
             case EDatabaseEngine::MySQL:
-                return "adddate($subject, INTERVAL $value $interval)";
+                return "adddate($subject, INTERVAL $value $escapedInterval)";
             case EDatabaseEngine::PostgreSQL:
-                return "($subject + INTERVAL '$value $interval')";
+                return "($subject + INTERVAL '$value $escapedInterval')";
             case EDatabaseEngine::SQLite:
-                return "datetime($subject,'$value $interval')";
+                return "datetime($subject,'$value $escapedInterval')";
             case EDatabaseEngine::SQLServer:
                 return $this->getFunctionCallSql(
                     'convert',
                     [
                         QE::raw($this->getFunctionCallSql('datetime2', [0])),
-                        QE::raw($this->getFunctionCallSql('dateadd', [$this->interval, $this->_value, $this->subject])),
+                        QE::raw($this->getFunctionCallSql('dateadd', [QE::raw($escapedInterval), $this->_value, $this->subject])),
                     ]
                 );
         }

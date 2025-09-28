@@ -6,6 +6,8 @@ use sbamtr\LaravelQueryEnrich\DBFunction;
 use sbamtr\LaravelQueryEnrich\EDatabaseEngine;
 use sbamtr\LaravelQueryEnrich\QE;
 
+use function sbamtr\LaravelQueryEnrich\enum_value;
+
 /**
  * Subtracts a time/date interval from a date and then returns the date.
  */
@@ -43,13 +45,13 @@ class SubDate extends DBFunction
 
         $subject = $this->escape($subject);
         $value = $this->escape($value);
-        $interval = $this->escape($interval);
+        $escapedInterval = enum_value($interval);
 
         switch ($this->getDatabaseEngine()) {
             case EDatabaseEngine::MySQL:
-                return "subdate($subject, INTERVAL $value $interval)";
+                return "subdate($subject, INTERVAL $value $escapedInterval)";
             case EDatabaseEngine::PostgreSQL:
-                return "($subject - INTERVAL '$value $interval')";
+                return "($subject - INTERVAL '$value $escapedInterval')";
             case EDatabaseEngine::SQLite:
             case EDatabaseEngine::SQLServer:
                 return QE::addDate($this->subject, -1 * $this->_value, $this->interval);

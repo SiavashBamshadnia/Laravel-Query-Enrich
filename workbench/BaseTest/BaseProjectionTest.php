@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use sbamtr\LaravelQueryEnrich\Date\Unit;
 use sbamtr\LaravelQueryEnrich\Exception\InvalidArgumentException;
 use sbamtr\LaravelQueryEnrich\QE;
+use Workbench\App\Enums\BookPrice;
 use Workbench\App\Models\Author;
 use Workbench\App\Models\Book;
 
@@ -49,6 +50,21 @@ abstract class BaseProjectionTest extends BaseTest
         $expected = $number_1 + $number_2;
 
         self::assertEquals($expected, $actual);
+    }
+
+    public function testRawWithEnumBinding()
+    {
+        $queryResult = DB::selectOne(
+            'select '.implode(',', [
+                (string) QE::raw('?', [BookPrice::CHEAP])->as('x'),
+                (string) QE::raw('?', [BookPrice::EXPENSIVE])->as('y'),
+                (string) QE::raw('?', [BookPrice::Affordable])->as('z'),
+            ]),
+        );
+
+        self::assertEquals('CHEAP', $queryResult->x);
+        self::assertEquals('expensive', $queryResult->y);
+        self::assertEquals('Affordable', $queryResult->z);
     }
 
     public function testRawInvalidArgumentException()
@@ -112,6 +128,53 @@ abstract class BaseProjectionTest extends BaseTest
         self::assertEquals('without_description', $books[0]->described);
         self::assertEquals('with_description', $books[1]->described);
         self::assertEquals('with_description', $books[2]->described);
+    }
+
+    public function testCaseWhenWithEnum()
+    {
+        $author = Author::create([
+            'first_name' => $this->faker->firstName,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
+        ]);
+        Book::insert([
+            [
+                'title'       => $this->faker->title,
+                'description' => $this->faker->text,
+                'author_id'   => $author->id,
+                'price'       => 150,
+                'year'        => $this->faker->year,
+            ],
+            [
+                'title'       => $this->faker->title,
+                'description' => $this->faker->text,
+                'author_id'   => $author->id,
+                'price'       => 62,
+                'year'        => $this->faker->year,
+            ],
+            [
+                'title'       => $this->faker->title,
+                'description' => $this->faker->text,
+                'author_id'   => $author->id,
+                'price'       => 20,
+                'year'        => $this->faker->year,
+            ],
+        ]);
+
+        $books = Book::select(
+            QE::case()
+                ->when(c('price'), '>', 100)->then(BookPrice::EXPENSIVE)
+                ->when(
+                    QE::condition(50, '<', c('price')),
+                    QE::condition(c('price'), '<=', 100)
+                )->then(BookPrice::Affordable)
+                ->else(BookPrice::CHEAP)
+            ->as('price_category')
+        )->get();
+
+        self::assertEquals('expensive', $books[0]->price_category);
+        self::assertEquals('Affordable', $books[1]->price_category);
+        self::assertEquals('CHEAP', $books[2]->price_category);
     }
 
     public function testCaseWhenInvalidArgumentException()
@@ -231,7 +294,9 @@ abstract class BaseProjectionTest extends BaseTest
             QE::condition('a', 'not like', 'b')->as('not_like').','.
             QE::condition('b', 'in', ['a', 'b', 'c', 'd'])->as('in').','.
             QE::condition('e', 'not in', ['a', 'b', 'c', 'd'])->as('not_in').','.
-            QE::condition(1, 'is not', null)->as('is_not')
+            QE::condition(1, 'is not', null)->as('is_not').','.
+            QE::condition('expensive', 'in', [BookPrice::EXPENSIVE, BookPrice::CHEAP])->as('in_enums').','.
+            QE::condition('x', 'not in', [BookPrice::EXPENSIVE, BookPrice::CHEAP])->as('not_in_enums'),
         );
 
         self::assertEquals(1, $queryResult->equal_2);
@@ -249,6 +314,8 @@ abstract class BaseProjectionTest extends BaseTest
         self::assertEquals(1, $queryResult->in);
         self::assertEquals(1, $queryResult->not_in);
         self::assertEquals(1, $queryResult->is_not);
+        self::assertEquals(1, $queryResult->in_enums);
+        self::assertEquals(1, $queryResult->not_in_enums);
     }
 
     public function testAddDate()
