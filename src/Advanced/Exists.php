@@ -21,6 +21,6 @@ class Exists extends DBFunction
 
     protected function getQuery(): string
     {
-        return $this->getFunctionCallSql('exists', [$this->query]);
+        return 'exists '.$this->escape($this->query);
     }
 }
