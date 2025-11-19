@@ -158,7 +158,7 @@ abstract class DBFunction extends Expression
             return $parameter->toSql();
         }
         if ($parameter instanceof EloquentBuilder || $parameter instanceof QueryBuilder) {
-            return $parameter->toSql();
+            return '('.$parameter->toRawSql().')';
         }
         if (is_array($parameter)) {
             $queryGrammar = DB::connection()->getQueryGrammar();

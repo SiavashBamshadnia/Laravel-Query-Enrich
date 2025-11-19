@@ -177,6 +177,63 @@ abstract class BaseProjectionTest extends BaseTest
         self::assertEquals('CHEAP', $books[2]->price_category);
     }
 
+    public function testCaseWhenWithSubQuery()
+    {
+        $author1 = Author::create([
+            'first_name' => $this->faker->firstName,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
+        ]);
+        $author2 = Author::create([
+            'first_name' => $this->faker->firstName,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
+        ]);
+        $author3 = Author::create([
+            'first_name' => $this->faker->firstName,
+            'last_name'  => $this->faker->lastName,
+            'email'      => $this->faker->email,
+        ]);
+        Book::insert([
+            [
+                'title'       => $this->faker->title,
+                'description' => $this->faker->text,
+                'author_id'   => $author1->id,
+                'price'       => $this->faker->randomNumber(3),
+                'year'        => 2020,
+            ],
+            [
+                'title'       => $this->faker->title,
+                'description' => $this->faker->text,
+                'author_id'   => $author2->id,
+                'price'       => $this->faker->randomNumber(3),
+                'year'        => 2005,
+            ],
+            [
+                'title'       => $this->faker->title,
+                'description' => $this->faker->text,
+                'author_id'   => $author3->id,
+                'price'       => $this->faker->randomNumber(3),
+                'year'        => 1910,
+            ],
+        ]);
+
+        $books = Book::select(
+            QE::case()
+                ->when(c('year'), '>', 2000)->then(
+                    Author::query()
+                        ->whereColumn('authors.id', 'books.author_id')
+                        ->select('email')
+                )
+                ->else('too old')
+            ->as('author_email')
+        )->get();
+
+        self::assertEquals($author1->email, $books[0]->author_email);
+        self::assertEquals($author2->email, $books[1]->author_email);
+        self::assertEquals('too old', $books[2]->author_email);
+    }
+
     public function testCaseWhenInvalidArgumentException()
     {
         self::expectException(InvalidArgumentException::class);
